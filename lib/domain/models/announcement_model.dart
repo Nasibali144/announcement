@@ -1,0 +1,3 @@
+class Announcement {}
+
+class Category {}
