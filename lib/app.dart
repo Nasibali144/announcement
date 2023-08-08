@@ -1,4 +1,4 @@
-import 'package:announcement/presentation/screens/home_screen.dart';
+import 'package:announcement/presentation/screens/main_screen.dart';
 import 'package:announcement/presentation/screens/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class AnnouncementApp extends StatelessWidget {
             .authStateChanges(),
         builder: (context, snapshot) {
           if(snapshot.hasData && snapshot.data != null) {
-            return HomeScreen();
+            return MainScreen();
           }
           return SignInScreen();
         },

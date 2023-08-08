@@ -1,4 +1,4 @@
-import 'package:announcement/presentation/screens/home_screen.dart';
+import 'package:announcement/presentation/screens/main_screen.dart';
 import 'package:announcement/presentation/screens/sign_in_screen.dart';
 import 'package:announcement/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ sealed class AppRoute {
   }
 
   static signInToHome(BuildContext context) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => MainScreen()));
   }
 
   static homeToSignIn(BuildContext context) {
