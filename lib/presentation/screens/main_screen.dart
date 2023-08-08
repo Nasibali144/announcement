@@ -1,15 +1,17 @@
 import 'package:announcement/core/routes.dart';
 import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
+import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:announcement/presentation/screens/home_screen.dart';
 import 'package:announcement/presentation/screens/upload_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
-
+  final PageController screenController = PageController();
   final bloc = locator.get<AuthBloc>();
 
   @override
@@ -47,11 +49,16 @@ class MainScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: PageView(
-          children: [
-            HomeScreen(),
-            UploadScreen(),
-          ],
+        body: BlocProvider<AnnouncementBloc>(
+          create: (context) => locator<AnnouncementBloc>(),
+          child: PageView(
+            controller: screenController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              HomeScreen(),
+              UploadScreen(screenController: screenController,),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: Column(
@@ -79,6 +86,15 @@ class MainScreen extends StatelessWidget {
               )
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (page) => screenController.jumpToPage(page),
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.upload_circle), label: "Upload"),
+          ],
         ),
       ),
     );

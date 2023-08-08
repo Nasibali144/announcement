@@ -1,18 +1,15 @@
-import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  final bloc = locator<AnnouncementBloc>()..add(const GetAllDataEvent());
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AnnouncementBloc, AnnouncementState>(
-        bloc: bloc,
+        bloc: context.read<AnnouncementBloc>()..add(const GetAllDataEvent()),
         builder: (context, state) {
           if(state is AnnouncementGetAllDataSuccess) {
             return ListView.builder(

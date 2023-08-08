@@ -1,4 +1,3 @@
-import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/models/category_model.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
@@ -6,26 +5,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UploadScreen extends StatelessWidget {
-  UploadScreen({Key? key}) : super(key: key);
+  final PageController screenController;
+  UploadScreen({Key? key, required this.screenController}) : super(key: key);
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  final bloc = locator.get<AnnouncementBloc>();
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AnnouncementBloc, AnnouncementState>(
-      bloc: bloc,
+      bloc: context.read<AnnouncementBloc>(),
       listener: (context, state) {
         if(state is AnnouncementLoading) {
           print("Loading...");
         }
 
         if(state is AnnouncementUploadSuccess) {
+          /// show message for user
           Util.msg(context, "Successfully uploaded!");
+
+          /// clear text field for write next announcement
+          nameController.clear();
+          descController.clear();
+          categoryController.clear();
+          priceController.clear();
+          phoneController.clear();
+
+          /// navigate home work completed
+          screenController.jumpToPage(0);
+
+          /// update data
+          context.read<AnnouncementBloc>().add(const GetAllDataEvent());
         }
 
         if(state is AnnouncementFailure) {
@@ -60,7 +74,7 @@ class UploadScreen extends StatelessWidget {
               const Spacer(),
               FilledButton(
                 onPressed: () {
-                  bloc.add(UploadEvent(
+                  context.read<AnnouncementBloc>().add(UploadEvent(
                     name: nameController.text.trim(),
                     decs: descController.text.trim(),
                     phone: phoneController.text.trim(),
