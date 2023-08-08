@@ -1,4 +1,5 @@
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,12 @@ class HomeScreen extends StatelessWidget {
                   child: ListTile(
                     title: Text(item.name),
                     subtitle: Text(item.desc),
+                    trailing: IconButton(
+                      onPressed: () {
+                        context.read<AnnouncementBloc>().add(DeleteDataEvent(item.id));
+                      },
+                      icon: const Icon(CupertinoIcons.delete),
+                    ),
                   ),
                 );
               },
@@ -32,7 +39,9 @@ class HomeScreen extends StatelessWidget {
           );
         },
         listener: (context, state) {
-
+          if(state is AnnouncementDeleteDataSuccess) {
+            context.read<AnnouncementBloc>().add(const GetAllDataEvent());
+          }
         },
       ),
     );

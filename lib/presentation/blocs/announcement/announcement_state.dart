@@ -8,4 +8,5 @@ class AnnouncementState with _$AnnouncementState {
 
   const factory AnnouncementState.uploadSuccess() = AnnouncementUploadSuccess;
   const factory AnnouncementState.getAllDataSuccess({required List<Announcement> items}) = AnnouncementGetAllDataSuccess;
+  const factory AnnouncementState.deleteDataSuccess() = AnnouncementDeleteDataSuccess;
 }

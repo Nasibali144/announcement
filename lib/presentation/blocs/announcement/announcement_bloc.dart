@@ -17,6 +17,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
       : super(const AnnouncementState.initial()) {
     on<UploadEvent>(upload);
     on<GetAllDataEvent>(getAllData);
+    on<DeleteDataEvent>(deleteData);
   }
 
   void upload(UploadEvent event, Emitter emit) async {
@@ -44,5 +45,15 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     emit(const AnnouncementLoading());
     final result = await repository.getAllData();
     emit(AnnouncementGetAllDataSuccess(items: result));
+  }
+
+  void deleteData(DeleteDataEvent event, Emitter emit) async {
+    emit(const AnnouncementLoading());
+    final result = await repository.delete(event.key);
+    if(result) {
+      emit(const AnnouncementDeleteDataSuccess());
+    } else {
+      emit(const AnnouncementFailure(message: "Some thing error, try again later!!!"));
+    }
   }
 }

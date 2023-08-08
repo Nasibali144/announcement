@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 abstract class AnnouncementRepository {
   Future<bool> upload(Announcement announcement);
+  Future<bool> delete(String key);
   Future<List<Announcement>> getAllData();
 }
 
@@ -32,6 +33,17 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
       final file = folder.push();
       announcement.id = file.key ?? announcement.hashCode.toString();
       file.set(announcement.toJson());
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> delete(String key) async {
+    try {
+      final folder = database.ref(Folder.announcement);
+      await folder.child(key).remove();
       return true;
     } catch(e) {
       return false;

@@ -11,4 +11,5 @@ class AnnouncementEvent with _$AnnouncementEvent {
   }) = UploadEvent;
 
   const factory AnnouncementEvent.getAllData() = GetAllDataEvent;
+  const factory AnnouncementEvent.deleteData(String key) = DeleteDataEvent;
 }
