@@ -9,49 +9,40 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AnnouncementBloc, AnnouncementState>(
+      body: BlocBuilder<AnnouncementBloc, AnnouncementState>(
         bloc: context.read<AnnouncementBloc>()..add(const GetAllDataEvent()),
         builder: (context, state) {
-          if(state is AnnouncementGetAllDataSuccess) {
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.items.length,
-              itemBuilder: (context, index) {
-                final item = state.items[index];
-                return Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image(
-                        height: MediaQuery.sizeOf(context).width * .75,
-                        image: NetworkImage(item.images.first),
-                        fit: BoxFit.cover,
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: state.items.length,
+            itemBuilder: (context, index) {
+              final item = state.items[index];
+              return Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image(
+                      height: MediaQuery.sizeOf(context).width * .75,
+                      image: NetworkImage(item.images.first),
+                      fit: BoxFit.cover,
+                    ),
+                    ListTile(
+                      title: Text(item.name),
+                      subtitle: Text(item.desc),
+                      trailing: IconButton(
+                        onPressed: () {
+                          context
+                              .read<AnnouncementBloc>()
+                              .add(DeleteDataEvent(item.id));
+                        },
+                        icon: const Icon(CupertinoIcons.delete),
                       ),
-                      ListTile(
-                        title: Text(item.name),
-                        subtitle: Text(item.desc),
-                        trailing: IconButton(
-                          onPressed: () {
-                            context.read<AnnouncementBloc>().add(DeleteDataEvent(item.id));
-                          },
-                          icon: const Icon(CupertinoIcons.delete),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
-
-          return const Center(
-            child: Text("No Data"),
+                    ),
+                  ],
+                ),
+              );
+            },
           );
-        },
-        listener: (context, state) {
-          if(state is AnnouncementDeleteDataSuccess) {
-            context.read<AnnouncementBloc>().add(const GetAllDataEvent());
-          }
         },
       ),
     );

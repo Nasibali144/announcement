@@ -16,7 +16,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
   final AnnouncementRepository repository;
 
   AnnouncementBloc({required this.repository})
-      : super(const AnnouncementState.initial()) {
+      : super(const AnnouncementState(status: Status.initial, items: [])) {
     on<UploadEvent>(upload);
     on<GetAllDataEvent>(getAllData);
     on<DeleteDataEvent>(deleteData);
@@ -25,10 +25,10 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
   }
 
   void upload(UploadEvent event, Emitter emit) async {
-    emit(const AnnouncementLoading());
+    emit(AnnouncementState(status: Status.loading, items: state.items, images: event.files));
 
     if(event.name.isEmpty || event.files.isEmpty || event.decs.isEmpty) {
-      emit(const AnnouncementFailure(message: "Please fill all data"));
+      emit(AnnouncementState(status: Status.failure, items: state.items, message: "Please fill all data"));
       return;
     }
 
@@ -46,33 +46,33 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     );
     final result = await repository.upload(announcement, event.files);
     if(result) {
-      emit(const AnnouncementUploadSuccess());
+      emit(AnnouncementState(status: Status.success, items: state.items));
     } else {
-      emit(const AnnouncementFailure(message: "Some thing error, try again later!!!"));
+      emit(AnnouncementState(status: Status.failure, items: state.items, message: "Some thing error, try again later!!!"));
     }
   }
 
   void getAllData(GetAllDataEvent event, Emitter emit) async {
-    emit(const AnnouncementLoading());
+    emit(AnnouncementState(status: Status.loading, items: state.items));
     final result = await repository.getAllData();
-    emit(AnnouncementGetAllDataSuccess(items: result));
+    emit(AnnouncementState(status: Status.success, items: result));
   }
 
   void deleteData(DeleteDataEvent event, Emitter emit) async {
-    emit(const AnnouncementLoading());
+    emit(AnnouncementState(status: Status.loading, items: state.items));
     final result = await repository.delete(event.key);
     if(result) {
-      emit(const AnnouncementDeleteDataSuccess());
+      add(const GetAllDataEvent());
     } else {
-      emit(const AnnouncementFailure(message: "Some thing error, try again later!!!"));
+      emit(AnnouncementState(status: Status.failure, items: state.items, message: "Some thing error, try again later!!!"));
     }
   }
 
   void getImages(GetImagesEvent event, Emitter emit) async {
-    emit(AnnouncementGetImagesSuccess(images: event.images));
+    emit(AnnouncementState(status: Status.success, items: state.items, images: event.images));
   }
 
   void clearImages(ClearImagesEvent event, Emitter emit) async {
-    emit(const AnnouncementClearImagesSuccess());
+    emit(AnnouncementState(status: Status.success, items: state.items));
   }
 }
