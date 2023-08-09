@@ -19,15 +19,25 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = state.items[index];
                 return Card(
-                  child: ListTile(
-                    title: Text(item.name),
-                    subtitle: Text(item.desc),
-                    trailing: IconButton(
-                      onPressed: () {
-                        context.read<AnnouncementBloc>().add(DeleteDataEvent(item.id));
-                      },
-                      icon: const Icon(CupertinoIcons.delete),
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image(
+                        height: MediaQuery.sizeOf(context).width * .75,
+                        image: NetworkImage(item.images.first),
+                        fit: BoxFit.cover,
+                      ),
+                      ListTile(
+                        title: Text(item.name),
+                        subtitle: Text(item.desc),
+                        trailing: IconButton(
+                          onPressed: () {
+                            context.read<AnnouncementBloc>().add(DeleteDataEvent(item.id));
+                          },
+                          icon: const Icon(CupertinoIcons.delete),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

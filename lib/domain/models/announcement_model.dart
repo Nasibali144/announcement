@@ -6,7 +6,7 @@ class Announcement implements Comparable<Announcement> {
   String desc;
   String createdAt;
   String modifyAt;
-  // List<String> images;
+  List<String> images;
   Category category;
   double price;
   bool isFavorite;
@@ -20,7 +20,7 @@ class Announcement implements Comparable<Announcement> {
     required this.desc,
     required this.createdAt,
     required this.modifyAt,
-    // required this.images,
+    required this.images,
     required this.category,
     required this.price,
     required this.isFavorite,
@@ -34,7 +34,7 @@ class Announcement implements Comparable<Announcement> {
         desc: json["desc"] as String,
         createdAt: json["createdAt"] as String,
         modifyAt: json["modifyAt"] as String,
-        // images: json["images"] as List<String>,
+        images: List<String>.from(json["images"] as List),
         phone: json["phone"] as String,
         // user: ConvertUser.fromJson(json["user"] as Map<String, Object?>),
         category: Category.fromJson(Map<String, Object?>.from(json["category"] as Map)),
@@ -49,7 +49,7 @@ class Announcement implements Comparable<Announcement> {
         "desc": desc,
         "createdAt": createdAt,
         "modifyAt": modifyAt,
-        // "images": images,
+        "images": images,
         "category": category.toJson(),
         "price": price,
         "isFavorite": isFavorite,
@@ -67,7 +67,7 @@ class Announcement implements Comparable<Announcement> {
           desc == other.desc &&
           createdAt == other.createdAt &&
           modifyAt == other.modifyAt &&
-          // images == other.images &&
+          images == other.images &&
           category == other.category &&
           price == other.price &&
           phone == other.phone &&

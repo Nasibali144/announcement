@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:announcement/core/utils.dart';
@@ -20,6 +21,7 @@ class UploadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<File> files = [];
     return BlocListener<AnnouncementBloc, AnnouncementState>(
       bloc: context.read<AnnouncementBloc>(),
       listener: (context, state) {
@@ -64,6 +66,7 @@ class UploadScreen extends StatelessWidget {
                   builder: (context, state) {
                     if (state is AnnouncementGetImagesSuccess) {
                       final images = state.images;
+                      files = images;
 
                       return SizedBox(
                         width: MediaQuery.sizeOf(context).width,
@@ -73,10 +76,10 @@ class UploadScreen extends StatelessWidget {
                               shrinkWrap: true,
                               crossAxisCount: sqrt(images.length).ceil(),
                               children: List.generate(images.length, (index) {
-                                return Expanded(child: Image.file(images[index], fit: BoxFit.cover));
+                                return Image.file(images[index],
+                                    fit: BoxFit.cover);
                               }),
                             ),
-
                             Align(
                               alignment: const Alignment(0.9, -0.9),
                               child: IconButton.filled(
@@ -86,11 +89,18 @@ class UploadScreen extends StatelessWidget {
                                   minWidth: 30,
                                   minHeight: 30,
                                 ),
-                                style: IconButton.styleFrom(backgroundColor: Colors.grey.shade400),
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.grey.shade400),
                                 padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.close, size: 25, color: Colors.white,),
+                                icon: const Icon(
+                                  Icons.close,
+                                  size: 25,
+                                  color: Colors.white,
+                                ),
                                 onPressed: () {
-                                  context.read<AnnouncementBloc>().add(const ClearImagesEvent());
+                                  context
+                                      .read<AnnouncementBloc>()
+                                      .add(const ClearImagesEvent());
                                 },
                               ),
                             ),
@@ -153,6 +163,7 @@ class UploadScreen extends StatelessWidget {
                               categoryController.text.trim()),
                           price: double.tryParse(priceController.text.trim()) ??
                               0.0,
+                          files: files,
                         ));
                   },
                   child: const Text("Upload"),

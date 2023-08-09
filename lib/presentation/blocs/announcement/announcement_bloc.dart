@@ -26,6 +26,12 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
 
   void upload(UploadEvent event, Emitter emit) async {
     emit(const AnnouncementLoading());
+
+    if(event.name.isEmpty || event.files.isEmpty || event.decs.isEmpty) {
+      emit(const AnnouncementFailure(message: "Please fill all data"));
+      return;
+    }
+
     final announcement = Announcement(
       id: "01",
       name: event.name,
@@ -36,8 +42,9 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
       price: event.price,
       isFavorite: false,
       phone: event.phone,
+      images: [],
     );
-    final result = await repository.upload(announcement);
+    final result = await repository.upload(announcement, event.files);
     if(result) {
       emit(const AnnouncementUploadSuccess());
     } else {

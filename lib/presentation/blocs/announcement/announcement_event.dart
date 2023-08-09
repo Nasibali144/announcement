@@ -8,6 +8,7 @@ class AnnouncementEvent with _$AnnouncementEvent {
     required String phone,
     required Category category,
     required double price,
+    required List<File> files,
   }) = UploadEvent;
 
   const factory AnnouncementEvent.getAllData() = GetAllDataEvent;
