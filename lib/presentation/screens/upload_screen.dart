@@ -31,6 +31,9 @@ class UploadScreen extends StatelessWidget {
 
         if (state is AnnouncementGetImagesSuccess) {
           Navigator.of(context).pop();
+          if(state.images.isEmpty) {
+            context.read<AnnouncementBloc>().add(const ClearImagesEvent());
+          }
         }
 
         if (state is AnnouncementUploadSuccess) {
@@ -67,7 +70,6 @@ class UploadScreen extends StatelessWidget {
                     if (state is AnnouncementGetImagesSuccess) {
                       final images = state.images;
                       files = images;
-
                       return SizedBox(
                         width: MediaQuery.sizeOf(context).width,
                         child: Stack(
