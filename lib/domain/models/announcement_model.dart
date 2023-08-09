@@ -11,8 +11,7 @@ class Announcement implements Comparable<Announcement> {
   double price;
   bool isFavorite;
   String phone;
-  // User user;
-
+  String userId;
 
   Announcement({
     required this.id,
@@ -25,7 +24,7 @@ class Announcement implements Comparable<Announcement> {
     required this.price,
     required this.isFavorite,
     required this.phone,
-    // required this.user,
+    required this.userId,
   });
 
   factory Announcement.fromJson(Map<String, Object?> json) => Announcement(
@@ -37,10 +36,11 @@ class Announcement implements Comparable<Announcement> {
         images: List<String>.from(json["images"] as List),
         phone: json["phone"] as String,
         // user: ConvertUser.fromJson(json["user"] as Map<String, Object?>),
-        category: Category.fromJson(Map<String, Object?>.from(json["category"] as Map)),
+        category: Category.fromJson(
+            Map<String, Object?>.from(json["category"] as Map)),
         price: (json["price"] as num).toDouble(),
         isFavorite: json["isFavorite"] as bool,
-
+        userId: json["userId"] as String,
       );
 
   Map<String, Object?> toJson() => {
@@ -53,8 +53,8 @@ class Announcement implements Comparable<Announcement> {
         "category": category.toJson(),
         "price": price,
         "isFavorite": isFavorite,
-    "phone": phone,
-    // "user": user.toJson(),
+        "phone": phone,
+        "userId": userId,
       };
 
   @override
@@ -74,10 +74,19 @@ class Announcement implements Comparable<Announcement> {
           // user == other.user &&
           isFavorite == other.isFavorite;
 
-
   @override
-  int get hashCode => Object.hash(id, name, desc, createdAt, modifyAt,/* images,*/
-      category, price, isFavorite, phone, /*user*/);
+  int get hashCode => Object.hash(
+        id,
+        name,
+        desc,
+        createdAt,
+        modifyAt,
+        /* images,*/
+        category,
+        price,
+        isFavorite,
+        phone, /*user*/
+      );
 
   @override
   String toString() {
@@ -89,7 +98,6 @@ class Announcement implements Comparable<Announcement> {
     return id.compareTo(other.id);
   }
 }
-
 
 // sealed class ConvertUser {
 //   static User fromJson(Map<String, Object?> json) {

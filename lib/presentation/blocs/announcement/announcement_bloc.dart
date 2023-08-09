@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/domain/auth_repository/announcement_repository.dart';
+import 'package:announcement/domain/auth_repository/auth_repository.dart';
 import 'package:announcement/domain/models/announcement_model.dart';
 import 'package:announcement/domain/models/category_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +35,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     }
 
     final announcement = Announcement(
+      userId: locator<AuthRepository>().user!.uid,
       id: "01",
       name: event.name,
       desc: event.decs,

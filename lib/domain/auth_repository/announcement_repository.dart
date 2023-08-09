@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:announcement/core/service_locator.dart';
+import 'package:announcement/domain/auth_repository/auth_repository.dart';
 import 'package:announcement/domain/models/announcement_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,7 +29,7 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
     return data.children.map((item) {
       print(item.value);
       return Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
-    }).toList();
+    }).where((element) => element.userId == locator<AuthRepository>().user!.uid).toList();
   }
 
   @override
