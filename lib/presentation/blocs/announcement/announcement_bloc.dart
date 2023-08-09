@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:announcement/domain/auth_repository/announcement_repository.dart';
 import 'package:announcement/domain/models/announcement_model.dart';
 import 'package:announcement/domain/models/category_model.dart';
@@ -18,6 +20,8 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     on<UploadEvent>(upload);
     on<GetAllDataEvent>(getAllData);
     on<DeleteDataEvent>(deleteData);
+    on<GetImagesEvent>(getImages);
+    on<ClearImagesEvent>(clearImages);
   }
 
   void upload(UploadEvent event, Emitter emit) async {
@@ -55,5 +59,13 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     } else {
       emit(const AnnouncementFailure(message: "Some thing error, try again later!!!"));
     }
+  }
+
+  void getImages(GetImagesEvent event, Emitter emit) async {
+    emit(AnnouncementGetImagesSuccess(images: event.images));
+  }
+
+  void clearImages(ClearImagesEvent event, Emitter emit) async {
+    emit(const AnnouncementClearImagesSuccess());
   }
 }

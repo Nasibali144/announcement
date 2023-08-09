@@ -9,4 +9,6 @@ class AnnouncementState with _$AnnouncementState {
   const factory AnnouncementState.uploadSuccess() = AnnouncementUploadSuccess;
   const factory AnnouncementState.getAllDataSuccess({required List<Announcement> items}) = AnnouncementGetAllDataSuccess;
   const factory AnnouncementState.deleteDataSuccess() = AnnouncementDeleteDataSuccess;
+  const factory AnnouncementState.getImagesSuccess({required List<File> images}) = AnnouncementGetImagesSuccess;
+  const factory AnnouncementState.clearImagesSuccess() = AnnouncementClearImagesSuccess;
 }
