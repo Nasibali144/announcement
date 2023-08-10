@@ -1,4 +1,4 @@
-import 'package:announcement/domain/auth_repository/auth_repository.dart';
+import 'package:announcement/domain/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

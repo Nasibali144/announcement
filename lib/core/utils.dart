@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class Util {
   static void msg(BuildContext context, String message,
@@ -35,5 +36,19 @@ class Util {
     final picker = ImagePicker();
     final files = await picker.pickMultiImage();
     return files.map((e) => File(e.path)).toList();
+  }
+
+  static String dayMonth(String stringDate) {
+    final date = DateTime.parse(stringDate);
+    final transformer = DateFormat.MMMMd();
+    return transformer.format(date);
+  }
+
+  static String date(String stringDate) {
+    final date = DateTime.parse(stringDate);
+    final transformer1 = DateFormat.yMMMMd();
+    final transformer2 = DateFormat.Hm();
+
+    return "${transformer1.format(date)}\n${transformer2.format(date)}";
   }
 }

@@ -1,15 +1,12 @@
 import 'dart:io';
-
-import 'package:announcement/core/service_locator.dart';
-import 'package:announcement/domain/auth_repository/auth_repository.dart';
-import 'package:announcement/domain/models/announcement_model.dart';
+import 'package:announcement/core/folder_names.dart';
+import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class AnnouncementRepository {
   Future<bool> upload(Announcement announcement, List<File> files);
   Future<bool> delete(String key);
-  Future<List<Announcement>> getAllData();
 }
 
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
@@ -18,19 +15,6 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
 
   const AnnouncementRepositoryImpl({required this.database, required this.storage});
 
-  @override
-  Future<List<Announcement>> getAllData() async {
-    final folder = database.ref(Folder.announcement);
-    final data = await folder.get();
-    if(!data.exists) {
-      return [];
-    }
-
-    return data.children.map((item) {
-      print(item.value);
-      return Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
-    }).where((element) => element.userId == locator<AuthRepository>().user!.uid).toList();
-  }
 
   @override
   Future<bool> upload(Announcement announcement, List<File> files) async {
@@ -40,7 +24,6 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
       List<String> images = [];
       for(int i = 0; i < files.length; i++) {
         final path = files[i].path.substring(files[i].path.lastIndexOf("/") + 1);
-        print(path);
         await imageFolder.child(path).putFile(files[i]);
         final url = await imageFolder.child(path).getDownloadURL();
         images.add(url);
@@ -49,9 +32,8 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
       /// database
       final folder = database.ref(Folder.announcement);
       final file = folder.push();
-      announcement.id = file.key ?? announcement.hashCode.toString();
-      announcement.images = images;
-      file.set(announcement.toJson());
+      final data = announcement.copyWith(id: file.key ?? announcement.hashCode.toString(), images: images);
+      file.set(data.toJson());
       return true;
     } catch(e) {
       return false;
@@ -70,7 +52,3 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
   }
 }
 
-sealed class Folder {
-  static const announcement = "announcement";
-  static const images = "images";
-}

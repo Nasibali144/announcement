@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:announcement/core/utils.dart';
-import 'package:announcement/domain/models/category_model.dart';
+import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
+import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,7 @@ class UploadScreen extends StatelessWidget {
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,6 @@ class UploadScreen extends StatelessWidget {
     return BlocListener<AnnouncementBloc, AnnouncementState>(
       bloc: context.read<AnnouncementBloc>(),
       listener: (context, state) {
-
 
         if (state.status == Status.success && state.images.isNotEmpty) {
           Navigator.of(context).pop();
@@ -47,7 +48,7 @@ class UploadScreen extends StatelessWidget {
           screenController.jumpToPage(0);
 
           /// update data
-          context.read<AnnouncementBloc>().add(const GetAllDataEvent());
+          context.read<DataBloc>().add(const DataAllEvent());
         }
 
         if (state.status == Status.failure) {
@@ -152,6 +153,10 @@ class UploadScreen extends StatelessWidget {
                     TextField(
                         controller: phoneController,
                         decoration: const InputDecoration(hintText: "Phone")),
+                    const SizedBox(height: 10),
+                    TextField(
+                        controller: addressController,
+                        decoration: const InputDecoration(hintText: "Address")),
                     const SizedBox(height: 20),
                     FilledButton(
                       onPressed: () {
@@ -160,10 +165,12 @@ class UploadScreen extends StatelessWidget {
                               decs: descController.text.trim(),
                               phone: phoneController.text.trim(),
                               category: Category.fromString(
-                                  categoryController.text.trim()),
+                                /// Warning!!!
+                                  categoryController.text.trim(), context.read<DataBloc>().state.categories),
                               price: double.tryParse(priceController.text.trim()) ??
                                   0.0,
                               files: files,
+                          address: addressController.text.trim(),
                             ));
                       },
                       child: const Text("Upload"),
