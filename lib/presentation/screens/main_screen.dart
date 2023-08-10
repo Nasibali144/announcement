@@ -4,8 +4,10 @@ import 'package:announcement/core/utils.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:announcement/presentation/screens/home_screen.dart';
+import 'package:announcement/presentation/screens/profile_screen.dart';
 import 'package:announcement/presentation/screens/upload_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +32,7 @@ class MainScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        /// appbar
         appBar: AppBar(
           leading: Builder(
             builder: (context) {
@@ -49,6 +52,8 @@ class MainScreen extends StatelessWidget {
             ),
           ],
         ),
+
+        /// body
         body: BlocProvider<AnnouncementBloc>(
           create: (context) => locator<AnnouncementBloc>(),
           child: PageView(
@@ -56,17 +61,24 @@ class MainScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               HomeScreen(),
-              UploadScreen(screenController: screenController,),
+              UploadScreen(
+                screenController: screenController,
+              ),
+              const ProfileScreen(),
             ],
           ),
         ),
+
+        /// drawer
         drawer: Drawer(
           child: Column(
             children: [
               BlocBuilder<AuthBloc, AuthState>(
                 bloc: bloc,
                 builder: (context, state) {
-                  print(state);
+                  if (kDebugMode) {
+                    print(state);
+                  }
                   if (state is AuthSuccessState && state.user != null) {
                     return UserAccountsDrawerHeader(
                       accountName: Text(state.user?.displayName ?? ""),
@@ -78,7 +90,7 @@ class MainScreen extends StatelessWidget {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: TextButton(
                   onPressed: () => bloc.add(const AuthDeleteAccountEvent()),
                   child: const Text("Delete Account"),
@@ -87,6 +99,8 @@ class MainScreen extends StatelessWidget {
             ],
           ),
         ),
+
+        /// bottom
         bottomNavigationBar: BottomNavigationBar(
           onTap: (page) => screenController.jumpToPage(page),
           items: const [
@@ -94,6 +108,8 @@ class MainScreen extends StatelessWidget {
                 icon: Icon(CupertinoIcons.home), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.upload_circle), label: "Upload"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.profile_circled), label: "Profile"),
           ],
         ),
       ),
