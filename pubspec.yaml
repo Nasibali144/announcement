@@ -29,6 +29,9 @@ dependencies:
   firebase_auth: ^4.7.2
   firebase_database: ^10.2.4
   firebase_storage: ^11.2.5
+  cached_network_image: ^3.2.3
+  intl: ^0.18.1
+  carousel_slider: ^4.2.1
 
   image_picker: ^1.0.2
 
