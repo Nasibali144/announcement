@@ -21,6 +21,8 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             itemCount: state.data.length,
             itemBuilder: (_, i) {
+
+              /// TODO: warning
               final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
               return  AnnouncementFeed(item: state.data[i], category: category,);
             },
