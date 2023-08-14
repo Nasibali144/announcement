@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AnnouncementBloc>(create: (context) => locator<AnnouncementBloc>()),
-          BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataAllEvent())..add(const DataCategoryEvent())),
+          BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataCategoryEvent())),
         ],
         child: Scaffold(
           /// appbar

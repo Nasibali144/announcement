@@ -1,9 +1,5 @@
 import 'package:announcement/core/utils.dart';
-import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);

@@ -42,6 +42,7 @@ class DataRepositoryImpl implements DataRepository {
   Future<List<Announcement>> _fetchAnnouncement({String? key, Object? value}) async {
     final folder = database.ref(Folder.announcement);
     final DataSnapshot data;
+
     if(key != null) {
       data = await folder.equalTo(value, key: key).get();
     } else {

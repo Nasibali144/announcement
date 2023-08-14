@@ -16,5 +16,8 @@ enum DataStatus {
   initial,
   loading,
   failure,
-  success,
+  successData,
+  successCategory,
+  successPart,
+  successMy,
 }

@@ -21,24 +21,24 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   void _getAllData(DataAllEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
     final data = await dataRepository.allAnnouncement();
-    emit(state.copyWith(status: DataStatus.success, data: data));
+    emit(state.copyWith(status: DataStatus.successData, data: data));
   }
 
   void _getCategory(DataCategoryEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
     final category = await dataRepository.categories();
-    emit(state.copyWith(status: DataStatus.success, categories: category));
+    emit(state.copyWith(status: DataStatus.successCategory, categories: category));
   }
 
   void _getPartData(DataPartEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
-    final part = await dataRepository.partAnnouncement(event.id);
-    emit(state.copyWith(status: DataStatus.success, partData: part));
+    final part = state.data.where((element) => element.categoryId == event.id).toList();
+    emit(state.copyWith(status: DataStatus.successPart, partData: part));
   }
 
   void _getMyData(DataMyEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
     final myData = await dataRepository.myAnnouncement(event.uid);
-    emit(state.copyWith(status: DataStatus.success, myData: myData));
+    emit(state.copyWith(status: DataStatus.successMy, myData: myData));
   }
 }

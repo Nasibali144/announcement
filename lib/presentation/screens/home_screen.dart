@@ -14,18 +14,72 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<DataBloc, DataState>(
+      body: BlocConsumer<DataBloc, DataState>(
         bloc: context.read<DataBloc>(),
+        listener: (context, state) {
+          if(state.status == DataStatus.successCategory) {
+            context.read<DataBloc>().add(const DataAllEvent());
+          }
+        },
         builder: (context, state) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: state.data.length,
-            itemBuilder: (_, i) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// Category
+              SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.categories.length + 1,
+                  itemBuilder: (context, index) {
+                    Category? category;
+                    if(index != 0) {
+                      category = state.categories[index - 1];
+                    }
 
-              /// TODO: warning
-              final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
-              return  AnnouncementFeed(item: state.data[i], category: category,);
-            },
+                    return GestureDetector(
+                      onTap: () {
+                        if(index != 0) {
+                          context.read<DataBloc>().add(DataPartEvent(category!.id));
+                        } else {
+                          context.read<DataBloc>().add(const DataAllEvent());
+                        }
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            // color: Colors.greenAccent.shade100,
+                          ),
+                          child: Text(category?.name ?? "All"),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              /// Feeds
+              ListView.builder(
+                padding: const EdgeInsets.all(16),
+                shrinkWrap: true,
+                itemCount: state.status == DataStatus.successPart ? state.partData.length : state.data.length,
+                itemBuilder: (_, i) {
+                  /// TODO: warning
+                  final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
+
+                  final data = state.status == DataStatus.successCategory ? state.partData : state.data;
+                  return  AnnouncementFeed(item: data[i], category: category,);
+                },
+              )
+            ],
           );
         },
       ),
