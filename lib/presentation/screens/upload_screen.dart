@@ -4,6 +4,7 @@ import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/data/data_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,15 +26,16 @@ class UploadScreen extends StatelessWidget {
     return BlocListener<AnnouncementBloc, AnnouncementState>(
       bloc: context.read<AnnouncementBloc>(),
       listener: (context, state) {
-
         if (state.status == Status.success && state.images.isNotEmpty) {
           Navigator.of(context).pop();
-          if(state.images.isEmpty) {
+          if (state.images.isEmpty) {
             context.read<AnnouncementBloc>().add(const ClearImagesEvent());
           }
         }
 
-        if (state.status == Status.success && state.images.isEmpty && screenController.page == 1) {
+        if (state.status == Status.success &&
+            state.images.isEmpty &&
+            screenController.page == 1) {
           /// show message for user
           Util.msg(context, "Successfully uploaded!");
 
@@ -48,7 +50,7 @@ class UploadScreen extends StatelessWidget {
           screenController.jumpToPage(0);
 
           /// update data
-          context.read<DataBloc>().add(const DataAllEvent());
+          context.read<DataBloc>().add(const DataAnnouncementEvent());
         }
 
         if (state.status == Status.failure) {
@@ -63,10 +65,12 @@ class UploadScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    /// images
                     BlocBuilder<AnnouncementBloc, AnnouncementState>(
                       bloc: context.read<AnnouncementBloc>(),
                       builder: (context, state) {
-                        if (state.status != Status.failure && state.images.isNotEmpty) {
+                        if (state.status != Status.failure &&
+                            state.images.isNotEmpty) {
                           final images = state.images;
                           files = images;
                           return SizedBox(
@@ -76,7 +80,8 @@ class UploadScreen extends StatelessWidget {
                                 GridView.count(
                                   shrinkWrap: true,
                                   crossAxisCount: sqrt(images.length).ceil(),
-                                  children: List.generate(images.length, (index) {
+                                  children:
+                                      List.generate(images.length, (index) {
                                     return Image.file(images[index],
                                         fit: BoxFit.cover);
                                   }),
@@ -114,7 +119,8 @@ class UploadScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           width: MediaQuery.sizeOf(context).width,
                           height: MediaQuery.sizeOf(context).width * .75,
-                          decoration: BoxDecoration(color: Colors.grey.shade200),
+                          decoration:
+                              BoxDecoration(color: Colors.grey.shade200),
                           child: GestureDetector(
                             onTap: () => Util.getImage(
                               context: context,
@@ -134,26 +140,49 @@ class UploadScreen extends StatelessWidget {
                         );
                       },
                     ),
+
                     TextField(
                         controller: nameController,
                         decoration: const InputDecoration(hintText: "Name")),
                     const SizedBox(height: 10),
+
                     TextField(
                         controller: descController,
-                        decoration: const InputDecoration(hintText: "Description")),
+                        decoration:
+                            const InputDecoration(hintText: "Description")),
                     const SizedBox(height: 10),
+
                     TextField(
-                        controller: categoryController,
-                        decoration: const InputDecoration(hintText: "Category")),
+                      controller: categoryController,
+                      decoration: InputDecoration(
+                        hintText: "Category",
+                        suffixIcon: PopupMenuButton<Category>(
+                          onSelected: (category) {
+                            categoryController.text = category.name;
+                          },
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                          itemBuilder: (_) {
+                            final list = context.read<DataBloc>().state.categories;
+                            return list.map((category) => PopupMenuItem(value: category, child: CategoryUi(category: category))).toList();
+                          },
+                          icon: const Icon(Icons.arrow_drop_down_outlined),
+                        ),
+                      ),
+                      readOnly: true,
+                    ),
+
                     const SizedBox(height: 10),
+
                     TextField(
                         controller: priceController,
                         decoration: const InputDecoration(hintText: "Price")),
                     const SizedBox(height: 10),
+
                     TextField(
                         controller: phoneController,
                         decoration: const InputDecoration(hintText: "Phone")),
                     const SizedBox(height: 10),
+
                     TextField(
                         controller: addressController,
                         decoration: const InputDecoration(hintText: "Address")),
@@ -165,12 +194,15 @@ class UploadScreen extends StatelessWidget {
                               decs: descController.text.trim(),
                               phone: phoneController.text.trim(),
                               category: Category.fromString(
-                                /// Warning!!!
-                                  categoryController.text.trim(), context.read<DataBloc>().state.categories),
-                              price: double.tryParse(priceController.text.trim()) ??
+
+                                  /// Warning!!!
+                                  categoryController.text.trim(),
+                                  context.read<DataBloc>().state.categories),
+                              price: double.tryParse(
+                                      priceController.text.trim()) ??
                                   0.0,
                               files: files,
-                          address: addressController.text.trim(),
+                              address: addressController.text.trim(),
                             ));
                       },
                       child: const Text("Upload"),
@@ -180,11 +212,10 @@ class UploadScreen extends StatelessWidget {
               ),
             ),
           ),
-
           BlocBuilder<AnnouncementBloc, AnnouncementState>(
             bloc: context.read<AnnouncementBloc>(),
             builder: (context, state) {
-              if(state.status != Status.loading ) {
+              if (state.status != Status.loading) {
                 return const SizedBox.shrink();
               }
 
@@ -198,6 +229,37 @@ class UploadScreen extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class CategoryUi extends StatelessWidget {
+  final Category category;
+
+  const CategoryUi({Key? key, required this.category}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CachedNetworkImage(
+          width: 40,
+          imageUrl: category.imageUrl,
+          progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: CircularProgressIndicator.adaptive(
+                value: downloadProgress.progress,
+                strokeWidth: 1,
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+        const SizedBox(width: 5),
+        Text(category.name),
+      ],
     );
   }
 }

@@ -11,29 +11,31 @@ part 'data_bloc.freezed.dart';
 class DataBloc extends Bloc<DataEvent, DataState> {
   final DataRepository dataRepository;
 
-  DataBloc({required this.dataRepository}) : super( const DataState(status: DataStatus.initial, data: [], myData: [], partData: [], categories: [])) {
-    on<DataAllEvent>(_getAllData);
+  DataBloc({required this.dataRepository}) : super( const DataState(status: DataStatus.initial, data: [], myData: [], categories: [])) {
     on<DataCategoryEvent>(_getCategory);
-    on<DataPartEvent>(_getPartData);
+    on<DataAnnouncementEvent>(_getData);
     on<DataMyEvent>(_getMyData);
   }
 
-  void _getAllData(DataAllEvent event, Emitter emit) async {
-    emit(state.copyWith(status: DataStatus.loading));
-    final data = await dataRepository.allAnnouncement();
-    emit(state.copyWith(status: DataStatus.successData, data: data));
-  }
 
   void _getCategory(DataCategoryEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
     final category = await dataRepository.categories();
+    category.sort((current, previous) => DateTime.parse(previous.createdAt).compareTo(DateTime.parse(current.createdAt)));
     emit(state.copyWith(status: DataStatus.successCategory, categories: category));
   }
 
-  void _getPartData(DataPartEvent event, Emitter emit) async {
-    emit(state.copyWith(status: DataStatus.loading));
-    final part = state.data.where((element) => element.categoryId == event.id).toList();
-    emit(state.copyWith(status: DataStatus.successPart, partData: part));
+  void _getData(DataAnnouncementEvent event, Emitter emit) async {
+    emit(state.copyWith(status: DataStatus.loading, selectedCategoryId: event.categoryId));
+    final List<Announcement> data;
+
+    if(event.categoryId == null || event.categoryId == "all") {
+      data = await dataRepository.allAnnouncement();
+    } else {
+      data = await dataRepository.partAnnouncement(event.categoryId!);
+    }
+
+    emit(state.copyWith(status: DataStatus.successData, data: data));
   }
 
   void _getMyData(DataMyEvent event, Emitter emit) async {

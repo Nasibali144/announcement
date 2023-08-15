@@ -57,7 +57,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> deleteAccount() async {
-    await auth.currentUser?.delete();
+    if(user != null) {
+      final uid = user!.uid;
+      await user!.delete();
+      final folder = database.ref(Folder.user);
+      await folder.child(uid).remove();
+    }
   }
 
   @override

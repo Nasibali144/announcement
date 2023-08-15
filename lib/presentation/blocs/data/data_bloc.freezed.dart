@@ -18,50 +18,44 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DataEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() allAnnouncement,
     required TResult Function() categories,
-    required TResult Function(String id) partAnnouncement,
+    required TResult Function(String? categoryId) announcements,
     required TResult Function(String uid) myAnnouncement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? allAnnouncement,
     TResult? Function()? categories,
-    TResult? Function(String id)? partAnnouncement,
+    TResult? Function(String? categoryId)? announcements,
     TResult? Function(String uid)? myAnnouncement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? allAnnouncement,
     TResult Function()? categories,
-    TResult Function(String id)? partAnnouncement,
+    TResult Function(String? categoryId)? announcements,
     TResult Function(String uid)? myAnnouncement,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DataAllEvent value) allAnnouncement,
     required TResult Function(DataCategoryEvent value) categories,
-    required TResult Function(DataPartEvent value) partAnnouncement,
+    required TResult Function(DataAnnouncementEvent value) announcements,
     required TResult Function(DataMyEvent value) myAnnouncement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(DataAllEvent value)? allAnnouncement,
     TResult? Function(DataCategoryEvent value)? categories,
-    TResult? Function(DataPartEvent value)? partAnnouncement,
+    TResult? Function(DataAnnouncementEvent value)? announcements,
     TResult? Function(DataMyEvent value)? myAnnouncement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DataAllEvent value)? allAnnouncement,
     TResult Function(DataCategoryEvent value)? categories,
-    TResult Function(DataPartEvent value)? partAnnouncement,
+    TResult Function(DataAnnouncementEvent value)? announcements,
     TResult Function(DataMyEvent value)? myAnnouncement,
     required TResult orElse(),
   }) =>
@@ -83,120 +77,6 @@ class _$DataEventCopyWithImpl<$Res, $Val extends DataEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$DataAllEventCopyWith<$Res> {
-  factory _$$DataAllEventCopyWith(
-          _$DataAllEvent value, $Res Function(_$DataAllEvent) then) =
-      __$$DataAllEventCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$DataAllEventCopyWithImpl<$Res>
-    extends _$DataEventCopyWithImpl<$Res, _$DataAllEvent>
-    implements _$$DataAllEventCopyWith<$Res> {
-  __$$DataAllEventCopyWithImpl(
-      _$DataAllEvent _value, $Res Function(_$DataAllEvent) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$DataAllEvent implements DataAllEvent {
-  const _$DataAllEvent();
-
-  @override
-  String toString() {
-    return 'DataEvent.allAnnouncement()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$DataAllEvent);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() allAnnouncement,
-    required TResult Function() categories,
-    required TResult Function(String id) partAnnouncement,
-    required TResult Function(String uid) myAnnouncement,
-  }) {
-    return allAnnouncement();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? allAnnouncement,
-    TResult? Function()? categories,
-    TResult? Function(String id)? partAnnouncement,
-    TResult? Function(String uid)? myAnnouncement,
-  }) {
-    return allAnnouncement?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? allAnnouncement,
-    TResult Function()? categories,
-    TResult Function(String id)? partAnnouncement,
-    TResult Function(String uid)? myAnnouncement,
-    required TResult orElse(),
-  }) {
-    if (allAnnouncement != null) {
-      return allAnnouncement();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(DataAllEvent value) allAnnouncement,
-    required TResult Function(DataCategoryEvent value) categories,
-    required TResult Function(DataPartEvent value) partAnnouncement,
-    required TResult Function(DataMyEvent value) myAnnouncement,
-  }) {
-    return allAnnouncement(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(DataAllEvent value)? allAnnouncement,
-    TResult? Function(DataCategoryEvent value)? categories,
-    TResult? Function(DataPartEvent value)? partAnnouncement,
-    TResult? Function(DataMyEvent value)? myAnnouncement,
-  }) {
-    return allAnnouncement?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(DataAllEvent value)? allAnnouncement,
-    TResult Function(DataCategoryEvent value)? categories,
-    TResult Function(DataPartEvent value)? partAnnouncement,
-    TResult Function(DataMyEvent value)? myAnnouncement,
-    required TResult orElse(),
-  }) {
-    if (allAnnouncement != null) {
-      return allAnnouncement(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class DataAllEvent implements DataEvent {
-  const factory DataAllEvent() = _$DataAllEvent;
 }
 
 /// @nodoc
@@ -237,9 +117,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() allAnnouncement,
     required TResult Function() categories,
-    required TResult Function(String id) partAnnouncement,
+    required TResult Function(String? categoryId) announcements,
     required TResult Function(String uid) myAnnouncement,
   }) {
     return categories();
@@ -248,9 +127,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? allAnnouncement,
     TResult? Function()? categories,
-    TResult? Function(String id)? partAnnouncement,
+    TResult? Function(String? categoryId)? announcements,
     TResult? Function(String uid)? myAnnouncement,
   }) {
     return categories?.call();
@@ -259,9 +137,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? allAnnouncement,
     TResult Function()? categories,
-    TResult Function(String id)? partAnnouncement,
+    TResult Function(String? categoryId)? announcements,
     TResult Function(String uid)? myAnnouncement,
     required TResult orElse(),
   }) {
@@ -274,9 +151,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DataAllEvent value) allAnnouncement,
     required TResult Function(DataCategoryEvent value) categories,
-    required TResult Function(DataPartEvent value) partAnnouncement,
+    required TResult Function(DataAnnouncementEvent value) announcements,
     required TResult Function(DataMyEvent value) myAnnouncement,
   }) {
     return categories(this);
@@ -285,9 +161,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(DataAllEvent value)? allAnnouncement,
     TResult? Function(DataCategoryEvent value)? categories,
-    TResult? Function(DataPartEvent value)? partAnnouncement,
+    TResult? Function(DataAnnouncementEvent value)? announcements,
     TResult? Function(DataMyEvent value)? myAnnouncement,
   }) {
     return categories?.call(this);
@@ -296,9 +171,8 @@ class _$DataCategoryEvent implements DataCategoryEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DataAllEvent value)? allAnnouncement,
     TResult Function(DataCategoryEvent value)? categories,
-    TResult Function(DataPartEvent value)? partAnnouncement,
+    TResult Function(DataAnnouncementEvent value)? announcements,
     TResult Function(DataMyEvent value)? myAnnouncement,
     required TResult orElse(),
   }) {
@@ -314,99 +188,98 @@ abstract class DataCategoryEvent implements DataEvent {
 }
 
 /// @nodoc
-abstract class _$$DataPartEventCopyWith<$Res> {
-  factory _$$DataPartEventCopyWith(
-          _$DataPartEvent value, $Res Function(_$DataPartEvent) then) =
-      __$$DataPartEventCopyWithImpl<$Res>;
+abstract class _$$DataAnnouncementEventCopyWith<$Res> {
+  factory _$$DataAnnouncementEventCopyWith(_$DataAnnouncementEvent value,
+          $Res Function(_$DataAnnouncementEvent) then) =
+      __$$DataAnnouncementEventCopyWithImpl<$Res>;
   @useResult
-  $Res call({String id});
+  $Res call({String? categoryId});
 }
 
 /// @nodoc
-class __$$DataPartEventCopyWithImpl<$Res>
-    extends _$DataEventCopyWithImpl<$Res, _$DataPartEvent>
-    implements _$$DataPartEventCopyWith<$Res> {
-  __$$DataPartEventCopyWithImpl(
-      _$DataPartEvent _value, $Res Function(_$DataPartEvent) _then)
+class __$$DataAnnouncementEventCopyWithImpl<$Res>
+    extends _$DataEventCopyWithImpl<$Res, _$DataAnnouncementEvent>
+    implements _$$DataAnnouncementEventCopyWith<$Res> {
+  __$$DataAnnouncementEventCopyWithImpl(_$DataAnnouncementEvent _value,
+      $Res Function(_$DataAnnouncementEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? categoryId = freezed,
   }) {
-    return _then(_$DataPartEvent(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$DataAnnouncementEvent(
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$DataPartEvent implements DataPartEvent {
-  const _$DataPartEvent(this.id);
+class _$DataAnnouncementEvent implements DataAnnouncementEvent {
+  const _$DataAnnouncementEvent({this.categoryId});
 
   @override
-  final String id;
+  final String? categoryId;
 
   @override
   String toString() {
-    return 'DataEvent.partAnnouncement(id: $id)';
+    return 'DataEvent.announcements(categoryId: $categoryId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DataPartEvent &&
-            (identical(other.id, id) || other.id == id));
+            other is _$DataAnnouncementEvent &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, categoryId);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DataPartEventCopyWith<_$DataPartEvent> get copyWith =>
-      __$$DataPartEventCopyWithImpl<_$DataPartEvent>(this, _$identity);
+  _$$DataAnnouncementEventCopyWith<_$DataAnnouncementEvent> get copyWith =>
+      __$$DataAnnouncementEventCopyWithImpl<_$DataAnnouncementEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() allAnnouncement,
     required TResult Function() categories,
-    required TResult Function(String id) partAnnouncement,
+    required TResult Function(String? categoryId) announcements,
     required TResult Function(String uid) myAnnouncement,
   }) {
-    return partAnnouncement(id);
+    return announcements(categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? allAnnouncement,
     TResult? Function()? categories,
-    TResult? Function(String id)? partAnnouncement,
+    TResult? Function(String? categoryId)? announcements,
     TResult? Function(String uid)? myAnnouncement,
   }) {
-    return partAnnouncement?.call(id);
+    return announcements?.call(categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? allAnnouncement,
     TResult Function()? categories,
-    TResult Function(String id)? partAnnouncement,
+    TResult Function(String? categoryId)? announcements,
     TResult Function(String uid)? myAnnouncement,
     required TResult orElse(),
   }) {
-    if (partAnnouncement != null) {
-      return partAnnouncement(id);
+    if (announcements != null) {
+      return announcements(categoryId);
     }
     return orElse();
   }
@@ -414,47 +287,45 @@ class _$DataPartEvent implements DataPartEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DataAllEvent value) allAnnouncement,
     required TResult Function(DataCategoryEvent value) categories,
-    required TResult Function(DataPartEvent value) partAnnouncement,
+    required TResult Function(DataAnnouncementEvent value) announcements,
     required TResult Function(DataMyEvent value) myAnnouncement,
   }) {
-    return partAnnouncement(this);
+    return announcements(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(DataAllEvent value)? allAnnouncement,
     TResult? Function(DataCategoryEvent value)? categories,
-    TResult? Function(DataPartEvent value)? partAnnouncement,
+    TResult? Function(DataAnnouncementEvent value)? announcements,
     TResult? Function(DataMyEvent value)? myAnnouncement,
   }) {
-    return partAnnouncement?.call(this);
+    return announcements?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DataAllEvent value)? allAnnouncement,
     TResult Function(DataCategoryEvent value)? categories,
-    TResult Function(DataPartEvent value)? partAnnouncement,
+    TResult Function(DataAnnouncementEvent value)? announcements,
     TResult Function(DataMyEvent value)? myAnnouncement,
     required TResult orElse(),
   }) {
-    if (partAnnouncement != null) {
-      return partAnnouncement(this);
+    if (announcements != null) {
+      return announcements(this);
     }
     return orElse();
   }
 }
 
-abstract class DataPartEvent implements DataEvent {
-  const factory DataPartEvent(final String id) = _$DataPartEvent;
+abstract class DataAnnouncementEvent implements DataEvent {
+  const factory DataAnnouncementEvent({final String? categoryId}) =
+      _$DataAnnouncementEvent;
 
-  String get id;
+  String? get categoryId;
   @JsonKey(ignore: true)
-  _$$DataPartEventCopyWith<_$DataPartEvent> get copyWith =>
+  _$$DataAnnouncementEventCopyWith<_$DataAnnouncementEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -522,9 +393,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() allAnnouncement,
     required TResult Function() categories,
-    required TResult Function(String id) partAnnouncement,
+    required TResult Function(String? categoryId) announcements,
     required TResult Function(String uid) myAnnouncement,
   }) {
     return myAnnouncement(uid);
@@ -533,9 +403,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? allAnnouncement,
     TResult? Function()? categories,
-    TResult? Function(String id)? partAnnouncement,
+    TResult? Function(String? categoryId)? announcements,
     TResult? Function(String uid)? myAnnouncement,
   }) {
     return myAnnouncement?.call(uid);
@@ -544,9 +413,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? allAnnouncement,
     TResult Function()? categories,
-    TResult Function(String id)? partAnnouncement,
+    TResult Function(String? categoryId)? announcements,
     TResult Function(String uid)? myAnnouncement,
     required TResult orElse(),
   }) {
@@ -559,9 +427,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DataAllEvent value) allAnnouncement,
     required TResult Function(DataCategoryEvent value) categories,
-    required TResult Function(DataPartEvent value) partAnnouncement,
+    required TResult Function(DataAnnouncementEvent value) announcements,
     required TResult Function(DataMyEvent value) myAnnouncement,
   }) {
     return myAnnouncement(this);
@@ -570,9 +437,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(DataAllEvent value)? allAnnouncement,
     TResult? Function(DataCategoryEvent value)? categories,
-    TResult? Function(DataPartEvent value)? partAnnouncement,
+    TResult? Function(DataAnnouncementEvent value)? announcements,
     TResult? Function(DataMyEvent value)? myAnnouncement,
   }) {
     return myAnnouncement?.call(this);
@@ -581,9 +447,8 @@ class _$DataMyEvent implements DataMyEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DataAllEvent value)? allAnnouncement,
     TResult Function(DataCategoryEvent value)? categories,
-    TResult Function(DataPartEvent value)? partAnnouncement,
+    TResult Function(DataAnnouncementEvent value)? announcements,
     TResult Function(DataMyEvent value)? myAnnouncement,
     required TResult orElse(),
   }) {
@@ -607,9 +472,9 @@ abstract class DataMyEvent implements DataEvent {
 mixin _$DataState {
   DataStatus get status => throw _privateConstructorUsedError;
   List<Category> get categories => throw _privateConstructorUsedError;
+  String? get selectedCategoryId => throw _privateConstructorUsedError;
   List<Announcement> get data => throw _privateConstructorUsedError;
   List<Announcement> get myData => throw _privateConstructorUsedError;
-  List<Announcement> get partData => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -625,9 +490,9 @@ abstract class $DataStateCopyWith<$Res> {
   $Res call(
       {DataStatus status,
       List<Category> categories,
+      String? selectedCategoryId,
       List<Announcement> data,
       List<Announcement> myData,
-      List<Announcement> partData,
       String? message});
 }
 
@@ -646,9 +511,9 @@ class _$DataStateCopyWithImpl<$Res, $Val extends DataState>
   $Res call({
     Object? status = null,
     Object? categories = null,
+    Object? selectedCategoryId = freezed,
     Object? data = null,
     Object? myData = null,
-    Object? partData = null,
     Object? message = freezed,
   }) {
     return _then(_value.copyWith(
@@ -660,6 +525,10 @@ class _$DataStateCopyWithImpl<$Res, $Val extends DataState>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>,
+      selectedCategoryId: freezed == selectedCategoryId
+          ? _value.selectedCategoryId
+          : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -667,10 +536,6 @@ class _$DataStateCopyWithImpl<$Res, $Val extends DataState>
       myData: null == myData
           ? _value.myData
           : myData // ignore: cast_nullable_to_non_nullable
-              as List<Announcement>,
-      partData: null == partData
-          ? _value.partData
-          : partData // ignore: cast_nullable_to_non_nullable
               as List<Announcement>,
       message: freezed == message
           ? _value.message
@@ -690,9 +555,9 @@ abstract class _$$_DataStateCopyWith<$Res> implements $DataStateCopyWith<$Res> {
   $Res call(
       {DataStatus status,
       List<Category> categories,
+      String? selectedCategoryId,
       List<Announcement> data,
       List<Announcement> myData,
-      List<Announcement> partData,
       String? message});
 }
 
@@ -709,9 +574,9 @@ class __$$_DataStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? categories = null,
+    Object? selectedCategoryId = freezed,
     Object? data = null,
     Object? myData = null,
-    Object? partData = null,
     Object? message = freezed,
   }) {
     return _then(_$_DataState(
@@ -723,6 +588,10 @@ class __$$_DataStateCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>,
+      selectedCategoryId: freezed == selectedCategoryId
+          ? _value.selectedCategoryId
+          : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
@@ -730,10 +599,6 @@ class __$$_DataStateCopyWithImpl<$Res>
       myData: null == myData
           ? _value._myData
           : myData // ignore: cast_nullable_to_non_nullable
-              as List<Announcement>,
-      partData: null == partData
-          ? _value._partData
-          : partData // ignore: cast_nullable_to_non_nullable
               as List<Announcement>,
       message: freezed == message
           ? _value.message
@@ -749,14 +614,13 @@ class _$_DataState implements _DataState {
   const _$_DataState(
       {required this.status,
       required final List<Category> categories,
+      this.selectedCategoryId,
       required final List<Announcement> data,
       required final List<Announcement> myData,
-      required final List<Announcement> partData,
       this.message})
       : _categories = categories,
         _data = data,
-        _myData = myData,
-        _partData = partData;
+        _myData = myData;
 
   @override
   final DataStatus status;
@@ -768,6 +632,8 @@ class _$_DataState implements _DataState {
     return EqualUnmodifiableListView(_categories);
   }
 
+  @override
+  final String? selectedCategoryId;
   final List<Announcement> _data;
   @override
   List<Announcement> get data {
@@ -784,20 +650,12 @@ class _$_DataState implements _DataState {
     return EqualUnmodifiableListView(_myData);
   }
 
-  final List<Announcement> _partData;
-  @override
-  List<Announcement> get partData {
-    if (_partData is EqualUnmodifiableListView) return _partData;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_partData);
-  }
-
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'DataState(status: $status, categories: $categories, data: $data, myData: $myData, partData: $partData, message: $message)';
+    return 'DataState(status: $status, categories: $categories, selectedCategoryId: $selectedCategoryId, data: $data, myData: $myData, message: $message)';
   }
 
   @override
@@ -808,9 +666,10 @@ class _$_DataState implements _DataState {
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            (identical(other.selectedCategoryId, selectedCategoryId) ||
+                other.selectedCategoryId == selectedCategoryId) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             const DeepCollectionEquality().equals(other._myData, _myData) &&
-            const DeepCollectionEquality().equals(other._partData, _partData) &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -819,9 +678,9 @@ class _$_DataState implements _DataState {
       runtimeType,
       status,
       const DeepCollectionEquality().hash(_categories),
+      selectedCategoryId,
       const DeepCollectionEquality().hash(_data),
       const DeepCollectionEquality().hash(_myData),
-      const DeepCollectionEquality().hash(_partData),
       message);
 
   @JsonKey(ignore: true)
@@ -835,9 +694,9 @@ abstract class _DataState implements DataState {
   const factory _DataState(
       {required final DataStatus status,
       required final List<Category> categories,
+      final String? selectedCategoryId,
       required final List<Announcement> data,
       required final List<Announcement> myData,
-      required final List<Announcement> partData,
       final String? message}) = _$_DataState;
 
   @override
@@ -845,11 +704,11 @@ abstract class _DataState implements DataState {
   @override
   List<Category> get categories;
   @override
+  String? get selectedCategoryId;
+  @override
   List<Announcement> get data;
   @override
   List<Announcement> get myData;
-  @override
-  List<Announcement> get partData;
   @override
   String? get message;
   @override

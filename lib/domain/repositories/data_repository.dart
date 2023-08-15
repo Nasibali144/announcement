@@ -4,6 +4,7 @@ import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+/// https://petercoding.com/firebase/2020/02/16/using-firebase-queries-in-flutter/
 abstract class DataRepository {
   Future<List<Announcement>> allAnnouncement();
   Future<List<Category>> categories();
@@ -44,7 +45,8 @@ class DataRepositoryImpl implements DataRepository {
     final DataSnapshot data;
 
     if(key != null) {
-      data = await folder.equalTo(value, key: key).get();
+      final result = await folder.orderByChild(key).equalTo(value).once();
+      data = result.snapshot;
     } else {
       data = await folder.get();
     }

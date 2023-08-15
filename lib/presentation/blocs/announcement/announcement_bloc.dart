@@ -48,7 +48,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
       viewsCount: 0,
       likesCount: 0,
     );
-    final result = await repository.upload(announcement, event.files);
+    final result = await repository.upload(announcement, event.files, event.category.name.toLowerCase());
     if(result) {
       emit(const AnnouncementState(status: Status.success));
     } else {
@@ -58,7 +58,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
 
   void deleteData(DeleteDataEvent event, Emitter emit) async {
     emit(const AnnouncementState(status: Status.loading));
-    final result = await repository.delete(event.key);
+    final result = await repository.delete(event.announcement);
     if(result) {
       emit(const AnnouncementState(status: Status.success, message: "Successfully Deleted"));
     } else {

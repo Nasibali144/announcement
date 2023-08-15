@@ -13,12 +13,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<DataBloc>();
     return Scaffold(
       body: BlocConsumer<DataBloc, DataState>(
-        bloc: context.read<DataBloc>(),
+        bloc: bloc,
         listener: (context, state) {
-          if(state.status == DataStatus.successCategory) {
-            context.read<DataBloc>().add(const DataAllEvent());
+          if (state.status == DataStatus.successCategory) {
+            bloc.add(const DataAnnouncementEvent());
           }
         },
         builder: (context, state) {
@@ -33,34 +34,13 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.categories.length + 1,
+                  itemCount: state.categories.length,
                   itemBuilder: (context, index) {
-                    Category? category;
-                    if(index != 0) {
-                      category = state.categories[index - 1];
-                    }
-
-                    return GestureDetector(
-                      onTap: () {
-                        if(index != 0) {
-                          context.read<DataBloc>().add(DataPartEvent(category!.id));
-                        } else {
-                          context.read<DataBloc>().add(const DataAllEvent());
-                        }
-                      },
-                      child: Card(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            // color: Colors.greenAccent.shade100,
-                          ),
-                          child: Text(category?.name ?? "All"),
-                        ),
-                      ),
+                    Category category = state.categories[index];
+                    return CategoryItem(
+                      onTap: () => bloc.add(DataAnnouncementEvent(categoryId: category.id)),
+                      category: category,
+                      selectedId: state.selectedCategoryId,
                     );
                   },
                 ),
@@ -70,13 +50,16 @@ class HomeScreen extends StatelessWidget {
               ListView.builder(
                 padding: const EdgeInsets.all(16),
                 shrinkWrap: true,
-                itemCount: state.status == DataStatus.successPart ? state.partData.length : state.data.length,
+                itemCount: state.data.length,
                 itemBuilder: (_, i) {
-                  /// TODO: warning
+                  /// TODO: this code maybe remove in the future
                   final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
 
-                  final data = state.status == DataStatus.successCategory ? state.partData : state.data;
-                  return  AnnouncementFeed(item: data[i], category: category,);
+                  final data = state.data;
+                  return AnnouncementFeed(
+                    item: data[i],
+                    category: category,
+                  );
                 },
               )
             ],
@@ -87,11 +70,61 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class CategoryItem extends StatelessWidget {
+  final void Function()? onTap;
+  final Category category;
+  final String? selectedId;
+
+  const CategoryItem({Key? key, required this.onTap, required this.category, required this.selectedId})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        color: selectedId != null && selectedId == category.id ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.onPrimary,
+        child: Container(
+          height: 55,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 2.5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            // color: Colors.greenAccent.shade100,
+          ),
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                width: 40,
+                imageUrl: category.imageUrl,
+                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircularProgressIndicator.adaptive(
+                      value: downloadProgress.progress,
+                      strokeWidth: 1,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+              const SizedBox(width: 5),
+              Text(category.name),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class AnnouncementFeed extends StatelessWidget {
   final Announcement item;
   final Category category;
 
-  const AnnouncementFeed({Key? key, required this.item, required this.category}) : super(key: key);
+  const AnnouncementFeed({Key? key, required this.item, required this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +141,15 @@ class AnnouncementFeed extends StatelessWidget {
               alignment: const Alignment(.95, -.9),
               children: [
                 SliderImages(images: item.images),
-                IconButton(onPressed: () {
-                  /// TODO: with bloc
-                }, icon: const Icon(Icons.favorite), color: Colors.red, style: IconButton.styleFrom(backgroundColor: Colors.white.withOpacity(0.5)),)
+                IconButton(
+                  onPressed: () {
+                    /// TODO: with bloc
+                  },
+                  icon: const Icon(Icons.favorite),
+                  color: Colors.red,
+                  style: IconButton.styleFrom(
+                      backgroundColor: Colors.white.withOpacity(0.5)),
+                )
               ],
             ),
             ListTile(
@@ -150,6 +189,7 @@ class AnnouncementFeed extends StatelessWidget {
 
 class SliderImages extends StatelessWidget {
   final List<String> images;
+
   const SliderImages({Key? key, required this.images}) : super(key: key);
 
   @override
@@ -177,32 +217,32 @@ class SliderImages extends StatelessWidget {
           Align(
             alignment: const Alignment(0, 0.9),
             child: ValueListenableBuilder<int>(
-              valueListenable: currentImage,
-              builder: (_, page, __) {
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for(int i = 0; i < images.length; i++) AnimatedContainer(
-                      margin: const EdgeInsets.all(2),
-                      duration: const Duration(milliseconds: 250),
-                      height: 7.5,
-                      width: i == page ? 15 : 7.5,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white10,
-                            blurRadius: 7.5,
-                            spreadRadius: 7.5,
-                          )
-                        ]
-                      ),
-                    ),
-                  ],
-                );
-              }
-            ),
+                valueListenable: currentImage,
+                builder: (_, page, __) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0; i < images.length; i++)
+                        AnimatedContainer(
+                          margin: const EdgeInsets.all(2),
+                          duration: const Duration(milliseconds: 250),
+                          height: 7.5,
+                          width: i == page ? 15 : 7.5,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white10,
+                                  blurRadius: 7.5,
+                                  spreadRadius: 7.5,
+                                )
+                              ]),
+                        ),
+                    ],
+                  );
+                }),
           )
         ],
       ),

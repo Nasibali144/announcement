@@ -12,7 +12,7 @@ class AnnouncementEvent with _$AnnouncementEvent {
     required List<File> files,
   }) = UploadEvent;
 
-  const factory AnnouncementEvent.deleteData(String key) = DeleteDataEvent;
+  const factory AnnouncementEvent.deleteData(Announcement announcement, String categoryName) = DeleteDataEvent;
   const factory AnnouncementEvent.getImages(List<File> images) = GetImagesEvent;
   const factory AnnouncementEvent.clearImages() = ClearImagesEvent;
 }

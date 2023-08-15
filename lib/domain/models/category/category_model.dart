@@ -29,3 +29,63 @@ class Category with _$Category {
   factory Category.fromJson(Map<String, Object?> json) =>
       _$CategoryFromJson(json);
 }
+
+
+final categories = [
+  {
+    "id": "other",
+    "name": "Other",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=33934&format=png"
+  },
+  {
+    "id": "phone",
+    "name": "Phone",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+  {
+    "id": "appliances",
+    "name": "Appliances",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+  {
+    "id": "tv",
+    "name": "TV",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+  {
+    "id": "accessory",
+    "name": "Accessory",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+  {
+    "id": "kitchenware",
+    "name": "Kitchenware",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+  {
+    "id": "cars",
+    "name": "Cars",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+  },
+];

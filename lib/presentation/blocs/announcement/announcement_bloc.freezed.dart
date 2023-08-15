@@ -21,7 +21,8 @@ mixin _$AnnouncementEvent {
     required TResult Function(String name, String decs, String phone,
             String address, Category category, double price, List<File> files)
         upload,
-    required TResult Function(String key) deleteData,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
   }) =>
@@ -31,7 +32,8 @@ mixin _$AnnouncementEvent {
     TResult? Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult? Function(String key)? deleteData,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
   }) =>
@@ -41,7 +43,8 @@ mixin _$AnnouncementEvent {
     TResult Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult Function(String key)? deleteData,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
     required TResult orElse(),
@@ -239,7 +242,8 @@ class _$UploadEvent implements UploadEvent {
     required TResult Function(String name, String decs, String phone,
             String address, Category category, double price, List<File> files)
         upload,
-    required TResult Function(String key) deleteData,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
   }) {
@@ -252,7 +256,8 @@ class _$UploadEvent implements UploadEvent {
     TResult? Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult? Function(String key)? deleteData,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
   }) {
@@ -265,7 +270,8 @@ class _$UploadEvent implements UploadEvent {
     TResult Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult Function(String key)? deleteData,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
     required TResult orElse(),
@@ -342,7 +348,9 @@ abstract class _$$DeleteDataEventCopyWith<$Res> {
           _$DeleteDataEvent value, $Res Function(_$DeleteDataEvent) then) =
       __$$DeleteDataEventCopyWithImpl<$Res>;
   @useResult
-  $Res call({String key});
+  $Res call({Announcement announcement, String categoryName});
+
+  $AnnouncementCopyWith<$Res> get announcement;
 }
 
 /// @nodoc
@@ -356,28 +364,43 @@ class __$$DeleteDataEventCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? key = null,
+    Object? announcement = null,
+    Object? categoryName = null,
   }) {
     return _then(_$DeleteDataEvent(
-      null == key
-          ? _value.key
-          : key // ignore: cast_nullable_to_non_nullable
+      null == announcement
+          ? _value.announcement
+          : announcement // ignore: cast_nullable_to_non_nullable
+              as Announcement,
+      null == categoryName
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnnouncementCopyWith<$Res> get announcement {
+    return $AnnouncementCopyWith<$Res>(_value.announcement, (value) {
+      return _then(_value.copyWith(announcement: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$DeleteDataEvent implements DeleteDataEvent {
-  const _$DeleteDataEvent(this.key);
+  const _$DeleteDataEvent(this.announcement, this.categoryName);
 
   @override
-  final String key;
+  final Announcement announcement;
+  @override
+  final String categoryName;
 
   @override
   String toString() {
-    return 'AnnouncementEvent.deleteData(key: $key)';
+    return 'AnnouncementEvent.deleteData(announcement: $announcement, categoryName: $categoryName)';
   }
 
   @override
@@ -385,11 +408,14 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeleteDataEvent &&
-            (identical(other.key, key) || other.key == key));
+            (identical(other.announcement, announcement) ||
+                other.announcement == announcement) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, key);
+  int get hashCode => Object.hash(runtimeType, announcement, categoryName);
 
   @JsonKey(ignore: true)
   @override
@@ -403,11 +429,12 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     required TResult Function(String name, String decs, String phone,
             String address, Category category, double price, List<File> files)
         upload,
-    required TResult Function(String key) deleteData,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
   }) {
-    return deleteData(key);
+    return deleteData(announcement, categoryName);
   }
 
   @override
@@ -416,11 +443,12 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     TResult? Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult? Function(String key)? deleteData,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
   }) {
-    return deleteData?.call(key);
+    return deleteData?.call(announcement, categoryName);
   }
 
   @override
@@ -429,13 +457,14 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     TResult Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult Function(String key)? deleteData,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
     required TResult orElse(),
   }) {
     if (deleteData != null) {
-      return deleteData(key);
+      return deleteData(announcement, categoryName);
     }
     return orElse();
   }
@@ -479,9 +508,12 @@ class _$DeleteDataEvent implements DeleteDataEvent {
 }
 
 abstract class DeleteDataEvent implements AnnouncementEvent {
-  const factory DeleteDataEvent(final String key) = _$DeleteDataEvent;
+  const factory DeleteDataEvent(
+          final Announcement announcement, final String categoryName) =
+      _$DeleteDataEvent;
 
-  String get key;
+  Announcement get announcement;
+  String get categoryName;
   @JsonKey(ignore: true)
   _$$DeleteDataEventCopyWith<_$DeleteDataEvent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -560,7 +592,8 @@ class _$GetImagesEvent implements GetImagesEvent {
     required TResult Function(String name, String decs, String phone,
             String address, Category category, double price, List<File> files)
         upload,
-    required TResult Function(String key) deleteData,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
   }) {
@@ -573,7 +606,8 @@ class _$GetImagesEvent implements GetImagesEvent {
     TResult? Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult? Function(String key)? deleteData,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
   }) {
@@ -586,7 +620,8 @@ class _$GetImagesEvent implements GetImagesEvent {
     TResult Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult Function(String key)? deleteData,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
     required TResult orElse(),
@@ -685,7 +720,8 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     required TResult Function(String name, String decs, String phone,
             String address, Category category, double price, List<File> files)
         upload,
-    required TResult Function(String key) deleteData,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
   }) {
@@ -698,7 +734,8 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     TResult? Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult? Function(String key)? deleteData,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
   }) {
@@ -711,7 +748,8 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     TResult Function(String name, String decs, String phone, String address,
             Category category, double price, List<File> files)?
         upload,
-    TResult Function(String key)? deleteData,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
     required TResult orElse(),

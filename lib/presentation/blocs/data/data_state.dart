@@ -5,9 +5,9 @@ class DataState with _$DataState {
   const factory DataState({
     required DataStatus status,
     required List<Category> categories,
+    String? selectedCategoryId,
     required List<Announcement> data,
     required List<Announcement> myData,
-    required List<Announcement> partData,
     String? message,
 }) = _DataState;
 }
@@ -18,6 +18,5 @@ enum DataStatus {
   failure,
   successData,
   successCategory,
-  successPart,
   successMy,
 }
