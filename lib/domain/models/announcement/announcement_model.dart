@@ -22,7 +22,7 @@ class Announcement with _$Announcement {
     required String userId,
     required String address,
     required int viewsCount,
-    required int likesCount,
+    @Default([]) List<String> likes,
     @Default([]) List<Message> discussion,
 }) = _Announcement;
 

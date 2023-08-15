@@ -24,7 +24,9 @@ _$_Announcement _$$_AnnouncementFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String,
       address: json['address'] as String,
       viewsCount: json['viewsCount'] as int,
-      likesCount: json['likesCount'] as int,
+      likes:
+          (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
       discussion: (json['discussion'] as List<dynamic>?)
               ?.map((e) => Message.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -46,6 +48,6 @@ Map<String, dynamic> _$$_AnnouncementToJson(_$_Announcement instance) =>
       'userId': instance.userId,
       'address': instance.address,
       'viewsCount': instance.viewsCount,
-      'likesCount': instance.likesCount,
+      'likes': instance.likes,
       'discussion': instance.discussion.map((e) => e.toJson()).toList(),
     };

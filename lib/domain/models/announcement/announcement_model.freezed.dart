@@ -33,7 +33,7 @@ mixin _$Announcement {
   String get userId => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   int get viewsCount => throw _privateConstructorUsedError;
-  int get likesCount => throw _privateConstructorUsedError;
+  List<String> get likes => throw _privateConstructorUsedError;
   List<Message> get discussion => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ abstract class $AnnouncementCopyWith<$Res> {
       String userId,
       String address,
       int viewsCount,
-      int likesCount,
+      List<String> likes,
       List<Message> discussion});
 }
 
@@ -92,7 +92,7 @@ class _$AnnouncementCopyWithImpl<$Res, $Val extends Announcement>
     Object? userId = null,
     Object? address = null,
     Object? viewsCount = null,
-    Object? likesCount = null,
+    Object? likes = null,
     Object? discussion = null,
   }) {
     return _then(_value.copyWith(
@@ -148,10 +148,10 @@ class _$AnnouncementCopyWithImpl<$Res, $Val extends Announcement>
           ? _value.viewsCount
           : viewsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      likesCount: null == likesCount
-          ? _value.likesCount
-          : likesCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       discussion: null == discussion
           ? _value.discussion
           : discussion // ignore: cast_nullable_to_non_nullable
@@ -182,7 +182,7 @@ abstract class _$$_AnnouncementCopyWith<$Res>
       String userId,
       String address,
       int viewsCount,
-      int likesCount,
+      List<String> likes,
       List<Message> discussion});
 }
 
@@ -210,7 +210,7 @@ class __$$_AnnouncementCopyWithImpl<$Res>
     Object? userId = null,
     Object? address = null,
     Object? viewsCount = null,
-    Object? likesCount = null,
+    Object? likes = null,
     Object? discussion = null,
   }) {
     return _then(_$_Announcement(
@@ -266,10 +266,10 @@ class __$$_AnnouncementCopyWithImpl<$Res>
           ? _value.viewsCount
           : viewsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      likesCount: null == likesCount
-          ? _value.likesCount
-          : likesCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      likes: null == likes
+          ? _value._likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       discussion: null == discussion
           ? _value._discussion
           : discussion // ignore: cast_nullable_to_non_nullable
@@ -296,9 +296,10 @@ class _$_Announcement implements _Announcement {
       required this.userId,
       required this.address,
       required this.viewsCount,
-      required this.likesCount,
+      final List<String> likes = const [],
       final List<Message> discussion = const []})
       : _images = images,
+        _likes = likes,
         _discussion = discussion;
 
   factory _$_Announcement.fromJson(Map<String, dynamic> json) =>
@@ -337,8 +338,15 @@ class _$_Announcement implements _Announcement {
   final String address;
   @override
   final int viewsCount;
+  final List<String> _likes;
   @override
-  final int likesCount;
+  @JsonKey()
+  List<String> get likes {
+    if (_likes is EqualUnmodifiableListView) return _likes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_likes);
+  }
+
   final List<Message> _discussion;
   @override
   @JsonKey()
@@ -350,7 +358,7 @@ class _$_Announcement implements _Announcement {
 
   @override
   String toString() {
-    return 'Announcement(id: $id, name: $name, description: $description, createdAt: $createdAt, modifyAt: $modifyAt, images: $images, categoryId: $categoryId, price: $price, isFavorite: $isFavorite, phone: $phone, userId: $userId, address: $address, viewsCount: $viewsCount, likesCount: $likesCount, discussion: $discussion)';
+    return 'Announcement(id: $id, name: $name, description: $description, createdAt: $createdAt, modifyAt: $modifyAt, images: $images, categoryId: $categoryId, price: $price, isFavorite: $isFavorite, phone: $phone, userId: $userId, address: $address, viewsCount: $viewsCount, likes: $likes, discussion: $discussion)';
   }
 
   @override
@@ -377,8 +385,7 @@ class _$_Announcement implements _Announcement {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.viewsCount, viewsCount) ||
                 other.viewsCount == viewsCount) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount) &&
+            const DeepCollectionEquality().equals(other._likes, _likes) &&
             const DeepCollectionEquality()
                 .equals(other._discussion, _discussion));
   }
@@ -400,7 +407,7 @@ class _$_Announcement implements _Announcement {
       userId,
       address,
       viewsCount,
-      likesCount,
+      const DeepCollectionEquality().hash(_likes),
       const DeepCollectionEquality().hash(_discussion));
 
   @JsonKey(ignore: true)
@@ -432,7 +439,7 @@ abstract class _Announcement implements Announcement {
       required final String userId,
       required final String address,
       required final int viewsCount,
-      required final int likesCount,
+      final List<String> likes,
       final List<Message> discussion}) = _$_Announcement;
 
   factory _Announcement.fromJson(Map<String, dynamic> json) =
@@ -465,7 +472,7 @@ abstract class _Announcement implements Announcement {
   @override
   int get viewsCount;
   @override
-  int get likesCount;
+  List<String> get likes;
   @override
   List<Message> get discussion;
   @override

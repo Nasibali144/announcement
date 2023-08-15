@@ -90,8 +90,11 @@ class SignInScreen extends StatelessWidget {
                 bloc: bloc,
                 builder: (context, state) {
                   if(state is AuthLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return const Scaffold(
+                      backgroundColor: Colors.transparent,
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   } else {
                     return const SizedBox.shrink();

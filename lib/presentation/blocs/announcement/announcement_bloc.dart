@@ -46,7 +46,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
       images: [],
       address: event.address,
       viewsCount: 0,
-      likesCount: 0,
+      likes: [],
     );
     final result = await repository.upload(announcement, event.files, event.category.name.toLowerCase());
     if(result) {
