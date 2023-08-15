@@ -1,12 +1,70 @@
+import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
+import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  ProfileScreen({Key? key}) : super(key: key);
+  final bloc = locator.get<AuthBloc>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /// appbar
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              onPressed: () {
+                bloc.add(const AuthGetAccountEvent());
+                Scaffold.of(context).openDrawer();
+              },
+              icon: const Icon(Icons.menu),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => bloc.add(const AuthSignOutEvent()),
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+
+      /// drawer
+      drawer: Drawer(
+        child: Column(
+          children: [
+            BlocBuilder<AuthBloc, AuthState>(
+              bloc: bloc,
+              builder: (context, state) {
+                if (kDebugMode) {
+                  print(state);
+                }
+                if (state is AuthSuccessState && state.user != null) {
+                  return UserAccountsDrawerHeader(
+                    accountName: Text(state.user?.displayName ?? ""),
+                    accountEmail: Text(state.user?.email ?? ""),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: TextButton(
+                onPressed: () => bloc.add(const AuthDeleteAccountEvent()),
+                child: const Text("Delete Account"),
+              ),
+            )
+          ],
+        ),
+      ),
+
+
       body: Column(
         children: [
           Column(

@@ -60,6 +60,7 @@ class UploadScreen extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
+            appBar: AppBar(title: const Text("Upload"), centerTitle: true,),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(

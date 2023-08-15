@@ -6,9 +6,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 /// https://petercoding.com/firebase/2020/02/16/using-firebase-queries-in-flutter/
 abstract class DataRepository {
-  Future<List<Announcement>> allAnnouncement();
+  Future<List<Announcement>> allAnnouncement(String uid);
   Future<List<Category>> categories();
-  Future<List<Announcement>> partAnnouncement(String id);
+  Future<List<Announcement>> partAnnouncement(String id, String uid);
   Future<List<Announcement>> myAnnouncement(String uid);
 }
 
@@ -32,15 +32,15 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<List<Announcement>> allAnnouncement() => _fetchAnnouncement();
+  Future<List<Announcement>> allAnnouncement(String uid) => _fetchAnnouncement(uid: uid);
 
   @override
-  Future<List<Announcement>> partAnnouncement(String id) => _fetchAnnouncement(key: "categoryId", value: id);
+  Future<List<Announcement>> partAnnouncement(String id, String uid) => _fetchAnnouncement(key: "categoryId", value: id, uid: uid);
 
   @override
-  Future<List<Announcement>> myAnnouncement(String uid) => _fetchAnnouncement(key: "uid", value: uid);
+  Future<List<Announcement>> myAnnouncement(String uid) => _fetchAnnouncement(key: "uid", value: uid, uid: uid);
 
-  Future<List<Announcement>> _fetchAnnouncement({String? key, Object? value}) async {
+  Future<List<Announcement>> _fetchAnnouncement({required String uid,String? key, Object? value}) async {
     final folder = database.ref(Folder.announcement);
     final DataSnapshot data;
 
@@ -56,7 +56,8 @@ class DataRepositoryImpl implements DataRepository {
     }
 
     return data.children.map((item) {
-      return Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
+      final announcement = Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
+      return announcement.copyWith(isFavorite: announcement.likes.contains(uid));
     }).toList();
   }
 }

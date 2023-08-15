@@ -1,5 +1,6 @@
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
+import 'package:announcement/domain/repositories/auth_repository.dart';
 import 'package:announcement/domain/repositories/data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,9 +10,10 @@ part 'data_state.dart';
 part 'data_bloc.freezed.dart';
 
 class DataBloc extends Bloc<DataEvent, DataState> {
+  final AuthRepository authRepository;
   final DataRepository dataRepository;
 
-  DataBloc({required this.dataRepository}) : super( const DataState(status: DataStatus.initial, data: [], myData: [], categories: [])) {
+  DataBloc({required this.dataRepository, required this.authRepository}) : super( const DataState(status: DataStatus.initial, data: [], myData: [], categories: [])) {
     on<DataCategoryEvent>(_getCategory);
     on<DataAnnouncementEvent>(_getData);
     on<DataMyEvent>(_getMyData);
@@ -30,9 +32,9 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     final List<Announcement> data;
 
     if(event.categoryId == null || event.categoryId == "all") {
-      data = await dataRepository.allAnnouncement();
+      data = await dataRepository.allAnnouncement(authRepository.user!.uid);
     } else {
-      data = await dataRepository.partAnnouncement(event.categoryId!);
+      data = await dataRepository.partAnnouncement(event.categoryId!, authRepository.user!.uid);
     }
 
     emit(state.copyWith(status: DataStatus.successData, data: data));

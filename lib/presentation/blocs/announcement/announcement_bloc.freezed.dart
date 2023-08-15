@@ -25,6 +25,7 @@ mixin _$AnnouncementEvent {
         deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +37,7 @@ mixin _$AnnouncementEvent {
         deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +49,7 @@ mixin _$AnnouncementEvent {
         deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -56,6 +59,7 @@ mixin _$AnnouncementEvent {
     required TResult Function(DeleteDataEvent value) deleteData,
     required TResult Function(GetImagesEvent value) getImages,
     required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +68,7 @@ mixin _$AnnouncementEvent {
     TResult? Function(DeleteDataEvent value)? deleteData,
     TResult? Function(GetImagesEvent value)? getImages,
     TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +77,7 @@ mixin _$AnnouncementEvent {
     TResult Function(DeleteDataEvent value)? deleteData,
     TResult Function(GetImagesEvent value)? getImages,
     TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -246,6 +252,7 @@ class _$UploadEvent implements UploadEvent {
         deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
   }) {
     return upload(name, decs, phone, address, category, price, files);
   }
@@ -260,6 +267,7 @@ class _$UploadEvent implements UploadEvent {
         deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
   }) {
     return upload?.call(name, decs, phone, address, category, price, files);
   }
@@ -274,6 +282,7 @@ class _$UploadEvent implements UploadEvent {
         deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
     required TResult orElse(),
   }) {
     if (upload != null) {
@@ -289,6 +298,7 @@ class _$UploadEvent implements UploadEvent {
     required TResult Function(DeleteDataEvent value) deleteData,
     required TResult Function(GetImagesEvent value) getImages,
     required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
   }) {
     return upload(this);
   }
@@ -300,6 +310,7 @@ class _$UploadEvent implements UploadEvent {
     TResult? Function(DeleteDataEvent value)? deleteData,
     TResult? Function(GetImagesEvent value)? getImages,
     TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
   }) {
     return upload?.call(this);
   }
@@ -311,6 +322,7 @@ class _$UploadEvent implements UploadEvent {
     TResult Function(DeleteDataEvent value)? deleteData,
     TResult Function(GetImagesEvent value)? getImages,
     TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
     required TResult orElse(),
   }) {
     if (upload != null) {
@@ -433,6 +445,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
         deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
   }) {
     return deleteData(announcement, categoryName);
   }
@@ -447,6 +460,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
         deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
   }) {
     return deleteData?.call(announcement, categoryName);
   }
@@ -461,6 +475,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
         deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
     required TResult orElse(),
   }) {
     if (deleteData != null) {
@@ -476,6 +491,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     required TResult Function(DeleteDataEvent value) deleteData,
     required TResult Function(GetImagesEvent value) getImages,
     required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
   }) {
     return deleteData(this);
   }
@@ -487,6 +503,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     TResult? Function(DeleteDataEvent value)? deleteData,
     TResult? Function(GetImagesEvent value)? getImages,
     TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
   }) {
     return deleteData?.call(this);
   }
@@ -498,6 +515,7 @@ class _$DeleteDataEvent implements DeleteDataEvent {
     TResult Function(DeleteDataEvent value)? deleteData,
     TResult Function(GetImagesEvent value)? getImages,
     TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
     required TResult orElse(),
   }) {
     if (deleteData != null) {
@@ -596,6 +614,7 @@ class _$GetImagesEvent implements GetImagesEvent {
         deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
   }) {
     return getImages(images);
   }
@@ -610,6 +629,7 @@ class _$GetImagesEvent implements GetImagesEvent {
         deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
   }) {
     return getImages?.call(images);
   }
@@ -624,6 +644,7 @@ class _$GetImagesEvent implements GetImagesEvent {
         deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
     required TResult orElse(),
   }) {
     if (getImages != null) {
@@ -639,6 +660,7 @@ class _$GetImagesEvent implements GetImagesEvent {
     required TResult Function(DeleteDataEvent value) deleteData,
     required TResult Function(GetImagesEvent value) getImages,
     required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
   }) {
     return getImages(this);
   }
@@ -650,6 +672,7 @@ class _$GetImagesEvent implements GetImagesEvent {
     TResult? Function(DeleteDataEvent value)? deleteData,
     TResult? Function(GetImagesEvent value)? getImages,
     TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
   }) {
     return getImages?.call(this);
   }
@@ -661,6 +684,7 @@ class _$GetImagesEvent implements GetImagesEvent {
     TResult Function(DeleteDataEvent value)? deleteData,
     TResult Function(GetImagesEvent value)? getImages,
     TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
     required TResult orElse(),
   }) {
     if (getImages != null) {
@@ -724,6 +748,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
         deleteData,
     required TResult Function(List<File> images) getImages,
     required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
   }) {
     return clearImages();
   }
@@ -738,6 +763,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
         deleteData,
     TResult? Function(List<File> images)? getImages,
     TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
   }) {
     return clearImages?.call();
   }
@@ -752,6 +778,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
         deleteData,
     TResult Function(List<File> images)? getImages,
     TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
     required TResult orElse(),
   }) {
     if (clearImages != null) {
@@ -767,6 +794,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     required TResult Function(DeleteDataEvent value) deleteData,
     required TResult Function(GetImagesEvent value) getImages,
     required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
   }) {
     return clearImages(this);
   }
@@ -778,6 +806,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     TResult? Function(DeleteDataEvent value)? deleteData,
     TResult? Function(GetImagesEvent value)? getImages,
     TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
   }) {
     return clearImages?.call(this);
   }
@@ -789,6 +818,7 @@ class _$ClearImagesEvent implements ClearImagesEvent {
     TResult Function(DeleteDataEvent value)? deleteData,
     TResult Function(GetImagesEvent value)? getImages,
     TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
     required TResult orElse(),
   }) {
     if (clearImages != null) {
@@ -800,6 +830,177 @@ class _$ClearImagesEvent implements ClearImagesEvent {
 
 abstract class ClearImagesEvent implements AnnouncementEvent {
   const factory ClearImagesEvent() = _$ClearImagesEvent;
+}
+
+/// @nodoc
+abstract class _$$LikeEventCopyWith<$Res> {
+  factory _$$LikeEventCopyWith(
+          _$LikeEvent value, $Res Function(_$LikeEvent) then) =
+      __$$LikeEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Announcement announcement});
+
+  $AnnouncementCopyWith<$Res> get announcement;
+}
+
+/// @nodoc
+class __$$LikeEventCopyWithImpl<$Res>
+    extends _$AnnouncementEventCopyWithImpl<$Res, _$LikeEvent>
+    implements _$$LikeEventCopyWith<$Res> {
+  __$$LikeEventCopyWithImpl(
+      _$LikeEvent _value, $Res Function(_$LikeEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? announcement = null,
+  }) {
+    return _then(_$LikeEvent(
+      null == announcement
+          ? _value.announcement
+          : announcement // ignore: cast_nullable_to_non_nullable
+              as Announcement,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnnouncementCopyWith<$Res> get announcement {
+    return $AnnouncementCopyWith<$Res>(_value.announcement, (value) {
+      return _then(_value.copyWith(announcement: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$LikeEvent implements LikeEvent {
+  const _$LikeEvent(this.announcement);
+
+  @override
+  final Announcement announcement;
+
+  @override
+  String toString() {
+    return 'AnnouncementEvent.like(announcement: $announcement)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LikeEvent &&
+            (identical(other.announcement, announcement) ||
+                other.announcement == announcement));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, announcement);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LikeEventCopyWith<_$LikeEvent> get copyWith =>
+      __$$LikeEventCopyWithImpl<_$LikeEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String name, String decs, String phone,
+            String address, Category category, double price, List<File> files)
+        upload,
+    required TResult Function(Announcement announcement, String categoryName)
+        deleteData,
+    required TResult Function(List<File> images) getImages,
+    required TResult Function() clearImages,
+    required TResult Function(Announcement announcement) like,
+  }) {
+    return like(announcement);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String name, String decs, String phone, String address,
+            Category category, double price, List<File> files)?
+        upload,
+    TResult? Function(Announcement announcement, String categoryName)?
+        deleteData,
+    TResult? Function(List<File> images)? getImages,
+    TResult? Function()? clearImages,
+    TResult? Function(Announcement announcement)? like,
+  }) {
+    return like?.call(announcement);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String name, String decs, String phone, String address,
+            Category category, double price, List<File> files)?
+        upload,
+    TResult Function(Announcement announcement, String categoryName)?
+        deleteData,
+    TResult Function(List<File> images)? getImages,
+    TResult Function()? clearImages,
+    TResult Function(Announcement announcement)? like,
+    required TResult orElse(),
+  }) {
+    if (like != null) {
+      return like(announcement);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UploadEvent value) upload,
+    required TResult Function(DeleteDataEvent value) deleteData,
+    required TResult Function(GetImagesEvent value) getImages,
+    required TResult Function(ClearImagesEvent value) clearImages,
+    required TResult Function(LikeEvent value) like,
+  }) {
+    return like(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UploadEvent value)? upload,
+    TResult? Function(DeleteDataEvent value)? deleteData,
+    TResult? Function(GetImagesEvent value)? getImages,
+    TResult? Function(ClearImagesEvent value)? clearImages,
+    TResult? Function(LikeEvent value)? like,
+  }) {
+    return like?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UploadEvent value)? upload,
+    TResult Function(DeleteDataEvent value)? deleteData,
+    TResult Function(GetImagesEvent value)? getImages,
+    TResult Function(ClearImagesEvent value)? clearImages,
+    TResult Function(LikeEvent value)? like,
+    required TResult orElse(),
+  }) {
+    if (like != null) {
+      return like(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LikeEvent implements AnnouncementEvent {
+  const factory LikeEvent(final Announcement announcement) = _$LikeEvent;
+
+  Announcement get announcement;
+  @JsonKey(ignore: true)
+  _$$LikeEventCopyWith<_$LikeEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

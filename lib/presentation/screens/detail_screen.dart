@@ -1,6 +1,7 @@
 import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
+import 'package:announcement/presentation/components/like_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,16 +114,7 @@ class DetailScreen extends StatelessWidget {
                           ),
 
                           /// like
-                          IconButton(
-                            onPressed: () {
-                              /// TODO: with bloc
-                            },
-                            icon: const Icon(Icons.favorite),
-                            color: Colors.red,
-                            style: IconButton.styleFrom(
-                                backgroundColor: Colors.white.withOpacity(0.5),
-                                side: const BorderSide(color: Colors.grey)),
-                          ),
+                          LikeButton(announcement: announcement),
                         ],
                       ),
                       const SizedBox(height: 10),

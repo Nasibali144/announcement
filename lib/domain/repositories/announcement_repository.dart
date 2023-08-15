@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 abstract class AnnouncementRepository {
   Future<bool> upload(Announcement announcement, List<File> files, String categoryName);
   Future<bool> delete(Announcement announcement);
+  Future<bool> like(Announcement announcement, String uid);
 }
 
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
@@ -88,6 +89,42 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
 
       return true;
     } catch(e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> like(Announcement announcement, String uid) async{
+    try {
+      final memberPath = database.ref(Folder.user).child(uid);
+      final memberJson = await memberPath.get();
+      final member = Member.fromJson(Map<String, Object?>.from(memberJson.value as Map));
+
+      final folder = database.ref(Folder.announcement).child(announcement.id);
+      final announcementJson = await folder.get();
+      final newAnnouncement = Announcement.fromJson(Map<String, Object?>.from(announcementJson.value as Map));
+
+      final List<String> modifyAnnouncement = [...newAnnouncement.likes];
+      final List<String> modifyMember = [...member.likes];
+
+      if(modifyAnnouncement.contains(uid)) {
+        modifyAnnouncement.remove(uid);
+      } else {
+        modifyAnnouncement.add(uid);
+      }
+
+      if(modifyMember.contains(newAnnouncement.id)) {
+        modifyMember.remove(newAnnouncement.id);
+      } else {
+        modifyMember.add(newAnnouncement.id);
+      }
+
+      await memberPath.update({"likes": modifyMember});
+      await folder.update({"likes": modifyAnnouncement});
+
+      return true;
+    } catch (e) {
+      print(e);
       return false;
     }
   }

@@ -19,7 +19,7 @@ _$_Announcement _$$_AnnouncementFromJson(Map<String, dynamic> json) =>
           const [],
       categoryId: json['categoryId'] as String,
       price: (json['price'] as num).toDouble(),
-      isFavorite: json['isFavorite'] as bool,
+      isFavorite: json['isFavorite'] as bool? ?? false,
       phone: json['phone'] as String,
       userId: json['userId'] as String,
       address: json['address'] as String,

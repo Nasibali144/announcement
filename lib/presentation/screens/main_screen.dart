@@ -8,7 +8,6 @@ import 'package:announcement/presentation/screens/home_screen.dart';
 import 'package:announcement/presentation/screens/profile_screen.dart';
 import 'package:announcement/presentation/screens/upload_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,26 +37,7 @@ class MainScreen extends StatelessWidget {
           BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataCategoryEvent())),
         ],
         child: Scaffold(
-          /// appbar
-          appBar: AppBar(
-            leading: Builder(
-              builder: (context) {
-                return IconButton(
-                  onPressed: () {
-                    bloc.add(const AuthGetAccountEvent());
-                    Scaffold.of(context).openDrawer();
-                  },
-                  icon: const Icon(Icons.menu),
-                );
-              },
-            ),
-            actions: [
-              IconButton(
-                onPressed: () => bloc.add(const AuthSignOutEvent()),
-                icon: const Icon(Icons.logout),
-              ),
-            ],
-          ),
+
 
           /// body
           body: PageView(
@@ -68,40 +48,11 @@ class MainScreen extends StatelessWidget {
               UploadScreen(
                 screenController: screenController,
               ),
-              const ProfileScreen(),
+              ProfileScreen(),
             ],
           ),
 
-          /// drawer
-          drawer: Drawer(
-            child: Column(
-              children: [
-                BlocBuilder<AuthBloc, AuthState>(
-                  bloc: bloc,
-                  builder: (context, state) {
-                    if (kDebugMode) {
-                      print(state);
-                    }
-                    if (state is AuthSuccessState && state.user != null) {
-                      return UserAccountsDrawerHeader(
-                        accountName: Text(state.user?.displayName ?? ""),
-                        accountEmail: Text(state.user?.email ?? ""),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  child: TextButton(
-                    onPressed: () => bloc.add(const AuthDeleteAccountEvent()),
-                    child: const Text("Delete Account"),
-                  ),
-                )
-              ],
-            ),
-          ),
+
 
           /// bottom
           bottomNavigationBar: BottomNavigationBar(

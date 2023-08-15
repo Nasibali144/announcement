@@ -3,6 +3,7 @@ import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:announcement/presentation/blocs/data/data_bloc.dart';
+import 'package:announcement/presentation/components/like_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<DataBloc>();
     return Scaffold(
+      appBar: AppBar(title: const Text("Announcements"), centerTitle: true,),
       body: BlocConsumer<DataBloc, DataState>(
         bloc: bloc,
         listener: (context, state) {
@@ -32,7 +34,8 @@ class HomeScreen extends StatelessWidget {
                 height: 50,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   itemCount: state.categories.length,
                   itemBuilder: (context, index) {
@@ -75,7 +78,11 @@ class CategoryItem extends StatelessWidget {
   final Category category;
   final String? selectedId;
 
-  const CategoryItem({Key? key, required this.onTap, required this.category, required this.selectedId})
+  const CategoryItem(
+      {Key? key,
+      required this.onTap,
+      required this.category,
+      required this.selectedId})
       : super(key: key);
 
   @override
@@ -84,7 +91,9 @@ class CategoryItem extends StatelessWidget {
       onTap: onTap,
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 5),
-        color: selectedId != null && selectedId == category.id ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.onPrimary,
+        color: selectedId != null && selectedId == category.id
+            ? Theme.of(context).colorScheme.primaryContainer
+            : Theme.of(context).colorScheme.onPrimary,
         child: Container(
           height: 55,
           alignment: Alignment.center,
@@ -98,7 +107,8 @@ class CategoryItem extends StatelessWidget {
               CachedNetworkImage(
                 width: 40,
                 imageUrl: category.imageUrl,
-                progressIndicatorBuilder: (context, url, downloadProgress) => Padding(
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: CircularProgressIndicator.adaptive(
@@ -141,15 +151,7 @@ class AnnouncementFeed extends StatelessWidget {
               alignment: const Alignment(.95, -.9),
               children: [
                 SliderImages(images: item.images),
-                IconButton(
-                  onPressed: () {
-                    /// TODO: with bloc
-                  },
-                  icon: const Icon(Icons.favorite),
-                  color: Colors.red,
-                  style: IconButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.5)),
-                )
+                LikeButton(announcement: item),
               ],
             ),
             ListTile(
@@ -249,3 +251,4 @@ class SliderImages extends StatelessWidget {
     );
   }
 }
+

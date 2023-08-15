@@ -291,7 +291,7 @@ class _$_Announcement implements _Announcement {
       final List<String> images = const [],
       required this.categoryId,
       required this.price,
-      required this.isFavorite,
+      this.isFavorite = false,
       required this.phone,
       required this.userId,
       required this.address,
@@ -329,6 +329,7 @@ class _$_Announcement implements _Announcement {
   @override
   final double price;
   @override
+  @JsonKey()
   final bool isFavorite;
   @override
   final String phone;
@@ -434,7 +435,7 @@ abstract class _Announcement implements Announcement {
       final List<String> images,
       required final String categoryId,
       required final double price,
-      required final bool isFavorite,
+      final bool isFavorite,
       required final String phone,
       required final String userId,
       required final String address,

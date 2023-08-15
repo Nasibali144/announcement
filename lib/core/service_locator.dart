@@ -19,6 +19,6 @@ Future<void> setupLocator() async {
 
   /// bloc
   locator.registerFactory<AuthBloc>(() => AuthBloc(repository: locator()));
-  locator.registerFactory<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
-  locator.registerFactory<DataBloc>(() => DataBloc(dataRepository: locator()));
+  locator.registerLazySingleton<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
+  locator.registerLazySingleton<DataBloc>(() => DataBloc(dataRepository: locator(), authRepository: locator()));
 }

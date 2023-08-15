@@ -22,6 +22,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     on<DeleteDataEvent>(deleteData);
     on<GetImagesEvent>(getImages);
     on<ClearImagesEvent>(clearImages);
+    on<LikeEvent>(like);
   }
 
   void upload(UploadEvent event, Emitter emit) async {
@@ -72,5 +73,16 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
 
   void clearImages(ClearImagesEvent event, Emitter emit) async {
     emit(const AnnouncementState(status: Status.success));
+  }
+
+  void like(LikeEvent event, Emitter emit) async {
+    emit(const AnnouncementState(status: Status.loading));
+    final uid = locator<AuthRepository>().user!.uid;
+    final result = await repository.like(event.announcement, uid);
+    if(result) {
+      emit(const AnnouncementState(status: Status.success));
+    } else {
+      emit(const AnnouncementState(status: Status.failure, message: "Some thing error, try again later!!!"));
+    }
   }
 }

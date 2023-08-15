@@ -17,7 +17,7 @@ class Announcement with _$Announcement {
     @Default([]) List<String> images,
     required String categoryId,
     required double price,
-    required bool isFavorite,
+    @Default(false) bool isFavorite,
     required String phone,
     required String userId,
     required String address,
