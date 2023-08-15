@@ -9,6 +9,7 @@ abstract class AuthRepository {
   Future<User?> signUp(String username, String email, String password);
   Future<void> signOut();
   Future<void> deleteAccount();
+  Future<Member> gerUserInfo();
   User? get user;
 }
 
@@ -57,12 +58,18 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> deleteAccount() async {
-    if(user != null) {
-      final uid = user!.uid;
-      await user!.delete();
+    if(auth.currentUser != null) {
+      final uid = auth.currentUser!.uid;
+      await auth.currentUser!.delete();
       final folder = database.ref(Folder.user);
       await folder.child(uid).remove();
     }
+  }
+
+  @override
+  Future<Member> gerUserInfo() async {
+    final result = await database.ref(Folder.user).child(auth.currentUser!.uid).get();
+    return Member.fromJson(Map<String, Object?>.from(result.value as Map));
   }
 
   @override

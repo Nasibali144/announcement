@@ -840,7 +840,7 @@ mixin _$AuthState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -850,7 +850,7 @@ mixin _$AuthState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -860,7 +860,7 @@ mixin _$AuthState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -958,7 +958,7 @@ class _$AuthInitialState implements AuthInitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -971,7 +971,7 @@ class _$AuthInitialState implements AuthInitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -984,7 +984,7 @@ class _$AuthInitialState implements AuthInitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1085,7 +1085,7 @@ class _$AuthLoadingState implements AuthLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1098,7 +1098,7 @@ class _$AuthLoadingState implements AuthLoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1111,7 +1111,7 @@ class _$AuthLoadingState implements AuthLoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1178,7 +1178,9 @@ abstract class _$$AuthSuccessStateCopyWith<$Res> {
           _$AuthSuccessState value, $Res Function(_$AuthSuccessState) then) =
       __$$AuthSuccessStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? message, User? user});
+  $Res call({String? message, Member? user});
+
+  $MemberCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -1203,8 +1205,20 @@ class __$$AuthSuccessStateCopyWithImpl<$Res>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as Member?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $MemberCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
@@ -1216,7 +1230,7 @@ class _$AuthSuccessState implements AuthSuccessState {
   @override
   final String? message;
   @override
-  final User? user;
+  final Member? user;
 
   @override
   String toString() {
@@ -1246,7 +1260,7 @@ class _$AuthSuccessState implements AuthSuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1259,7 +1273,7 @@ class _$AuthSuccessState implements AuthSuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1272,7 +1286,7 @@ class _$AuthSuccessState implements AuthSuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1330,11 +1344,11 @@ class _$AuthSuccessState implements AuthSuccessState {
 }
 
 abstract class AuthSuccessState implements AuthState {
-  const factory AuthSuccessState({final String? message, final User? user}) =
+  const factory AuthSuccessState({final String? message, final Member? user}) =
       _$AuthSuccessState;
 
   String? get message;
-  User? get user;
+  Member? get user;
   @JsonKey(ignore: true)
   _$$AuthSuccessStateCopyWith<_$AuthSuccessState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1407,7 +1421,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1420,7 +1434,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1433,7 +1447,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1568,7 +1582,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1581,7 +1595,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1594,7 +1608,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1727,7 +1741,7 @@ class _$AuthFailureState implements AuthFailureState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message, User? user) success,
+    required TResult Function(String? message, Member? user) success,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1740,7 +1754,7 @@ class _$AuthFailureState implements AuthFailureState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message, User? user)? success,
+    TResult? Function(String? message, Member? user)? success,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1753,7 +1767,7 @@ class _$AuthFailureState implements AuthFailureState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message, User? user)? success,
+    TResult Function(String? message, Member? user)? success,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,

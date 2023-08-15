@@ -1,5 +1,5 @@
+import 'package:announcement/domain/models/member/member_model.dart';
 import 'package:announcement/domain/repositories/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,6 +9,7 @@ part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repository;
+
   AuthBloc({required this.repository}) : super(const AuthInitialState()) {
     on<AuthSignInEvent>(signIn);
     on<AuthSignUpEvent>(signUp);
@@ -18,7 +19,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void getAccount(AuthGetAccountEvent event, Emitter emit) async {
-    emit(AuthSuccessState(user: repository.user));
+    emit(const AuthState.loading());
+    final user = await repository.gerUserInfo();
+    emit(AuthSuccessState(user: user));
   }
 
   void deleteAccount(AuthDeleteAccountEvent event, Emitter emit) async {

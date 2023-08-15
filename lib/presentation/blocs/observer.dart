@@ -9,10 +9,10 @@ class AnnouncementBlocObserver extends BlocObserver {
   // }
 
   @override
-  // void onTransition(Bloc bloc, Transition transition) {
-  //   super.onTransition(bloc, transition);
-  //   debugPrint('${bloc.runtimeType}. CurrentState: ${transition.currentState?.status} Event: ${transition.event}. NextState: ${transition.nextState?.status}');
-  // }
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    debugPrint('${bloc.runtimeType}: \nCurrentState: ${transition.currentState} \nEvent: ${transition.event}. \nNextState: ${transition.nextState}\n');
+  }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {

@@ -50,20 +50,22 @@ class HomeScreen extends StatelessWidget {
               ),
 
               /// Feeds
-              ListView.builder(
-                padding: const EdgeInsets.all(16),
-                shrinkWrap: true,
-                itemCount: state.data.length,
-                itemBuilder: (_, i) {
-                  /// TODO: this code maybe remove in the future
-                  final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  itemCount: state.data.length,
+                  itemBuilder: (_, i) {
+                    /// TODO: this code maybe remove in the future
+                    final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
 
-                  final data = state.data;
-                  return AnnouncementFeed(
-                    item: data[i],
-                    category: category,
-                  );
-                },
+                    final data = state.data;
+                    return AnnouncementFeed(
+                      item: data[i],
+                      category: category,
+                    );
+                  },
+                ),
               )
             ],
           );
@@ -158,7 +160,8 @@ class AnnouncementFeed extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(item.name),
+                  Expanded(child: Text(item.name, overflow: TextOverflow.ellipsis,)),
+
                   const SizedBox(width: 10),
                   Text(Util.dayMonth(item.modifyAt)),
                 ],
@@ -166,7 +169,7 @@ class AnnouncementFeed extends StatelessWidget {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(item.description),
+                  Expanded(child: Text(item.description, overflow: TextOverflow.ellipsis,)),
                   const SizedBox(width: 10),
                   Text("\$ ${item.price.toStringAsFixed(2)}"),
                 ],
