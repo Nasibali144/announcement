@@ -23,6 +23,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     on<GetImagesEvent>(getImages);
     on<ClearImagesEvent>(clearImages);
     on<LikeEvent>(like);
+    on<AnnouncementDataEvent>(data);
   }
 
   void upload(UploadEvent event, Emitter emit) async {
@@ -84,5 +85,10 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     } else {
       emit(const AnnouncementState(status: Status.failure, message: "Some thing error, try again later!!!"));
     }
+  }
+
+  void data(AnnouncementDataEvent event, Emitter emit) async {
+    final stream = repository.data(event.announcementId);
+    emit(state.copyWith(status: Status.success, stream: stream));
   }
 }

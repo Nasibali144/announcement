@@ -1,4 +1,6 @@
+import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
+import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:announcement/presentation/screens/main_screen.dart';
 import 'package:announcement/presentation/screens/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +18,8 @@ class AnnouncementApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => locator<AuthBloc>()),
+        BlocProvider<AnnouncementBloc>(create: (context) => locator<AnnouncementBloc>()),
+        BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataCategoryEvent())),
       ],
       child: MaterialApp(
         theme: ThemeData.light(useMaterial3: true),

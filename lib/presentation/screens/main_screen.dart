@@ -32,41 +32,33 @@ class MainScreen extends StatelessWidget {
           AppRoute.homeToSignIn(context);
         }
       },
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AnnouncementBloc>(create: (context) => locator<AnnouncementBloc>()),
-          BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataCategoryEvent())),
-        ],
-        child: Scaffold(
-
-
-          /// body
-          body: PageView(
-            controller: screenController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              const HomeScreen(),
-              UploadScreen(
-                screenController: screenController,
-              ),
-              ProfileScreen(),
-            ],
-          ),
+      child: Scaffold(
+        /// body
+        body: PageView(
+          controller: screenController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            const HomeScreen(),
+            UploadScreen(
+              screenController: screenController,
+            ),
+            const ProfileScreen(),
+          ],
+        ),
 
 
 
-          /// bottom
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: (page) => screenController.jumpToPage(page),
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.home), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.upload_circle), label: "Upload"),
-              BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.profile_circled), label: "Profile"),
-            ],
-          ),
+        /// bottom
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (page) => screenController.jumpToPage(page),
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.upload_circle), label: "Upload"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.profile_circled), label: "Profile"),
+          ],
         ),
       ),
     );

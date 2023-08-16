@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void getAccount(AuthGetAccountEvent event, Emitter emit) async {
     emit(const AuthState.loading());
-    final user = await repository.gerUserInfo();
+    final user = await repository.gerUserInfo(uid: event.uid);
     emit(AuthSuccessState(user: user));
   }
 

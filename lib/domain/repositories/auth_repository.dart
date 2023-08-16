@@ -10,7 +10,7 @@ abstract class AuthRepository {
   Future<User?> signUp(String username, String email, String password);
   Future<void> signOut();
   Future<bool> deleteAccount(String password);
-  Future<Member> gerUserInfo();
+  Future<Member> gerUserInfo({String? uid});
   User? get user;
 }
 
@@ -81,8 +81,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Member> gerUserInfo() async {
-    final result = await database.ref(Folder.user).child(auth.currentUser!.uid).get();
+  Future<Member> gerUserInfo({String? uid}) async {
+    final result = await database.ref(Folder.user).child(uid ?? auth.currentUser!.uid).get();
     return Member.fromJson(Map<String, Object?>.from(result.value as Map));
   }
 

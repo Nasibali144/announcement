@@ -16,4 +16,5 @@ class AnnouncementEvent with _$AnnouncementEvent {
   const factory AnnouncementEvent.getImages(List<File> images) = GetImagesEvent;
   const factory AnnouncementEvent.clearImages() = ClearImagesEvent;
   const factory AnnouncementEvent.like(Announcement announcement) = LikeEvent;
+  const factory AnnouncementEvent.data(String announcementId) = AnnouncementDataEvent;
 }

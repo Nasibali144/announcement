@@ -10,6 +10,7 @@ abstract class DataRepository {
   Future<List<Category>> categories();
   Future<List<Announcement>> partAnnouncement(String id, String uid);
   Future<List<Announcement>> myAnnouncement(String uid);
+  Future<List<Announcement>> likeAnnouncement(List<String> likes);
 }
 
 class DataRepositoryImpl implements DataRepository {
@@ -25,7 +26,6 @@ class DataRepositoryImpl implements DataRepository {
 
     if(!data.exists) return [];
 
-
     return data.children.map((item) {
       return Category.fromJson(Map<String, Object?>.from(item.value as Map));
     }).toList();
@@ -38,7 +38,7 @@ class DataRepositoryImpl implements DataRepository {
   Future<List<Announcement>> partAnnouncement(String id, String uid) => _fetchAnnouncement(key: "categoryId", value: id, uid: uid);
 
   @override
-  Future<List<Announcement>> myAnnouncement(String uid) => _fetchAnnouncement(key: "uid", value: uid, uid: uid);
+  Future<List<Announcement>> myAnnouncement(String uid) => _fetchAnnouncement(key: "userId", value: uid, uid: uid);
 
   Future<List<Announcement>> _fetchAnnouncement({required String uid,String? key, Object? value}) async {
     final folder = database.ref(Folder.announcement);
@@ -58,6 +58,21 @@ class DataRepositoryImpl implements DataRepository {
     return data.children.map((item) {
       final announcement = Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
       return announcement.copyWith(isFavorite: announcement.likes.contains(uid));
+    }).toList();
+  }
+
+  @override
+  Future<List<Announcement>> likeAnnouncement(List<String> likes) async {
+    final folder = database.ref(Folder.announcement);
+    final List<DataSnapshot> json = [];
+    for(String announcementId in likes) {
+      final data = await folder.child(announcementId).get();
+      json.add(data);
+    }
+
+    return json.map((item) {
+      final announcement = Announcement.fromJson(Map<String, Object?>.from(item.value as Map));
+      return announcement.copyWith(isFavorite: true);
     }).toList();
   }
 }

@@ -19,4 +19,5 @@ enum DataStatus {
   successData,
   successCategory,
   successMy,
+  successLike,
 }

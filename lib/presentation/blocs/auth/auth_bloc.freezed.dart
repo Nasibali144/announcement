@@ -24,7 +24,7 @@ mixin _$AuthEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,7 +35,7 @@ mixin _$AuthEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,7 +46,7 @@ mixin _$AuthEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -176,7 +176,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) {
     return signIn(email, password);
   }
@@ -190,7 +190,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) {
     return signIn?.call(email, password);
   }
@@ -204,7 +204,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) {
     if (signIn != null) {
@@ -365,7 +365,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) {
     return signUp(username, email, password, prePassword);
   }
@@ -379,7 +379,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) {
     return signUp?.call(username, email, password, prePassword);
   }
@@ -393,7 +393,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) {
     if (signUp != null) {
@@ -500,7 +500,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) {
     return signOut();
   }
@@ -514,7 +514,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) {
     return signOut?.call();
   }
@@ -528,7 +528,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -654,7 +654,7 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) {
     return deleteAccount(password);
   }
@@ -668,7 +668,7 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) {
     return deleteAccount?.call(password);
   }
@@ -682,7 +682,7 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) {
     if (deleteAccount != null) {
@@ -747,6 +747,8 @@ abstract class _$$AuthGetAccountEventCopyWith<$Res> {
   factory _$$AuthGetAccountEventCopyWith(_$AuthGetAccountEvent value,
           $Res Function(_$AuthGetAccountEvent) then) =
       __$$AuthGetAccountEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? uid});
 }
 
 /// @nodoc
@@ -756,26 +758,51 @@ class __$$AuthGetAccountEventCopyWithImpl<$Res>
   __$$AuthGetAccountEventCopyWithImpl(
       _$AuthGetAccountEvent _value, $Res Function(_$AuthGetAccountEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = freezed,
+  }) {
+    return _then(_$AuthGetAccountEvent(
+      uid: freezed == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$AuthGetAccountEvent implements AuthGetAccountEvent {
-  const _$AuthGetAccountEvent();
+  const _$AuthGetAccountEvent({this.uid});
+
+  @override
+  final String? uid;
 
   @override
   String toString() {
-    return 'AuthEvent.getAccount()';
+    return 'AuthEvent.getAccount(uid: $uid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthGetAccountEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthGetAccountEvent &&
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, uid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthGetAccountEventCopyWith<_$AuthGetAccountEvent> get copyWith =>
+      __$$AuthGetAccountEventCopyWithImpl<_$AuthGetAccountEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -786,9 +813,9 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
         signUp,
     required TResult Function() signOut,
     required TResult Function(String password) deleteAccount,
-    required TResult Function() getAccount,
+    required TResult Function(String? uid) getAccount,
   }) {
-    return getAccount();
+    return getAccount(uid);
   }
 
   @override
@@ -800,9 +827,9 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
         signUp,
     TResult? Function()? signOut,
     TResult? Function(String password)? deleteAccount,
-    TResult? Function()? getAccount,
+    TResult? Function(String? uid)? getAccount,
   }) {
-    return getAccount?.call();
+    return getAccount?.call(uid);
   }
 
   @override
@@ -814,11 +841,11 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
         signUp,
     TResult Function()? signOut,
     TResult Function(String password)? deleteAccount,
-    TResult Function()? getAccount,
+    TResult Function(String? uid)? getAccount,
     required TResult orElse(),
   }) {
     if (getAccount != null) {
-      return getAccount();
+      return getAccount(uid);
     }
     return orElse();
   }
@@ -865,7 +892,13 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
 }
 
 abstract class AuthGetAccountEvent implements AuthEvent {
-  const factory AuthGetAccountEvent() = _$AuthGetAccountEvent;
+  const factory AuthGetAccountEvent({final String? uid}) =
+      _$AuthGetAccountEvent;
+
+  String? get uid;
+  @JsonKey(ignore: true)
+  _$$AuthGetAccountEventCopyWith<_$AuthGetAccountEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

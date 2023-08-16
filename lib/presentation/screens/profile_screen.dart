@@ -1,7 +1,5 @@
 import 'package:announcement/core/routes.dart';
-import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
-import 'package:announcement/domain/repositories/auth_repository.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +13,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<AuthBloc>()..add(const AuthGetAccountEvent());
-    final dataBloc = context.read<DataBloc>()..add(DataMyEvent(locator.get<AuthRepository>().user!.uid));
+    final dataBloc = context.read<DataBloc>()
+      ..add(const DataMyEvent());
 
     return Scaffold(
       /// appbar
@@ -67,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
           BlocBuilder<AuthBloc, AuthState>(
             bloc: bloc,
             builder: (context, state) {
-              if(state is AuthSuccessState && state.user != null) {
+              if (state is AuthSuccessState && state.user != null) {
                 final user = state.user!;
                 return Column(
                   children: [
@@ -86,7 +85,7 @@ class ProfileScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(70),
                                 border:
-                                Border.all(width: 2, color: Colors.purple),
+                                    Border.all(width: 2, color: Colors.purple),
                               ),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
@@ -130,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                       height: 80,
                       child: Row(
                         children: [
-                           Expanded(
+                          Expanded(
                             child: Center(
                               child: Column(
                                 children: [
@@ -195,38 +194,57 @@ class ProfileScreen extends StatelessWidget {
                             width: 1,
                             color: Colors.grey,
                           )
-                        // color: Colors.purple
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
+                          // color: Colors.purple
+                          ),
+                      child: BlocBuilder<DataBloc, DataState>(
+                        bloc: dataBloc,
+                        builder: (context, state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => dataBloc.add(const DataMyEvent()),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: state.status == DataStatus.successMy || state.status != DataStatus.successLike  ?  const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      color: Colors.purple,
+                                    ) : null,
+                                    child: Text(
+                                      "Announcement",
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
                                   ),
-                                  color: Colors.purple),
-                              child: Text(
-                                "Announcement",
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              width: MediaQuery.sizeOf(context).width / 3,
-                              child: Text(
-                                "Likes",
-                                style: Theme.of(context).textTheme.bodyLarge,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => dataBloc.add(const DataLikeEvent()),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: state.status == DataStatus.successLike ?  const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      color: Colors.purple,
+                                    ) : null,
+                                    child: Text(
+                                      "Likes",
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ],
+                            ],
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -234,7 +252,7 @@ class ProfileScreen extends StatelessWidget {
                 );
               }
 
-              if(state is AuthLoadingState) {
+              if (state is AuthLoadingState) {
                 return const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
@@ -245,11 +263,10 @@ class ProfileScreen extends StatelessWidget {
               return const SizedBox.shrink();
             },
           ),
-
           BlocBuilder<DataBloc, DataState>(
             bloc: dataBloc,
             builder: (context, state) {
-              if(state.status == DataStatus.successMy) {
+              if (state.status == DataStatus.successMy || state.status == DataStatus.successLike) {
                 return Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
@@ -257,7 +274,8 @@ class ProfileScreen extends StatelessWidget {
                     itemCount: state.myData.length,
                     itemBuilder: (_, i) {
                       /// TODO: this code maybe remove in the future
-                      final category = state.categories.firstWhere((element) => element.id == state.myData[i].categoryId);
+                      final category = state.categories.firstWhere((element) =>
+                          element.id == state.myData[i].categoryId);
 
                       final data = state.myData;
                       return AnnouncementFeed(
@@ -268,7 +286,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 );
               }
-
 
               return const SizedBox.shrink();
             },

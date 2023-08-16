@@ -6,6 +6,7 @@ class AnnouncementState with _$AnnouncementState {
     required Status status,
     @Default([])List<File> images,
     String? message,
+    Stream<Announcement>? stream,
   }) = _AnnouncementState;
 }
 

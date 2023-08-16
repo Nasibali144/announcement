@@ -17,6 +17,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     on<DataCategoryEvent>(_getCategory);
     on<DataAnnouncementEvent>(_getData);
     on<DataMyEvent>(_getMyData);
+    on<DataLikeEvent>(_getLikeData);
   }
 
 
@@ -42,7 +43,15 @@ class DataBloc extends Bloc<DataEvent, DataState> {
 
   void _getMyData(DataMyEvent event, Emitter emit) async {
     emit(state.copyWith(status: DataStatus.loading));
-    final myData = await dataRepository.myAnnouncement(event.uid);
+
+    final myData = await dataRepository.myAnnouncement(authRepository.user!.uid);
     emit(state.copyWith(status: DataStatus.successMy, myData: myData));
+  }
+
+  void _getLikeData(DataLikeEvent event, Emitter emit) async {
+    emit(state.copyWith(status: DataStatus.loading));
+    final currentUser = await authRepository.gerUserInfo();
+    final likes = await dataRepository.likeAnnouncement(currentUser.likes);
+    emit(state.copyWith(status: DataStatus.successLike, myData: likes));
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:announcement/core/folder_names.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
@@ -5,11 +6,13 @@ import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:announcement/domain/models/member/member_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' as fn;
 
 abstract class AnnouncementRepository {
   Future<bool> upload(Announcement announcement, List<File> files, String categoryName);
   Future<bool> delete(Announcement announcement);
   Future<bool> like(Announcement announcement, String uid);
+  Stream<Announcement> data(String announcementId);
 }
 
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
@@ -127,6 +130,23 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
       print(e);
       return false;
     }
+  }
+
+  @override
+  Stream<Announcement> data(String announcementId) {
+    final transform = StreamTransformer<DatabaseEvent, Announcement>.fromHandlers(
+      handleData: (snapshot, sink) {
+        sink.add(Announcement.fromJson(Map<String, Object?>.from(snapshot.snapshot.value as Map)));
+      },
+      handleError: (error, stackTrace, sink) {
+        fn.debugPrint("Error: $error\nStackTrace: $stackTrace");
+      },
+      handleDone: (sink) {
+        fn.debugPrint("Completed Transformation!");
+      }
+    );
+    final stream = database.ref(Folder.announcement).child(announcementId).onValue;
+    return transform.bind(stream);
   }
 }
 
