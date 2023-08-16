@@ -26,8 +26,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void deleteAccount(AuthDeleteAccountEvent event, Emitter emit) async {
     emit(const AuthState.loading());
-    await repository.deleteAccount();
-    emit(const DeleteAccountSuccessState());
+    final isValid = _validateDeleteAccount(event.password);
+    if(isValid) {
+      final result = await repository.deleteAccount(event.password);
+      if(result) {
+        emit(const DeleteAccountSuccessState(message: "Successfully Delete Account!"));
+      } else {
+        emit(const AuthFailureState(message: "Please check your password!"));
+      }
+    } else {
+      emit(const AuthFailureState(message: "Please check your password!"));
+    }
+
   }
 
   void signOut(AuthSignOutEvent event, Emitter emit) async {
@@ -38,7 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void signUp(AuthSignUpEvent event, Emitter emit) async {
     emit(const AuthState.loading());
-    final isValid = validateSignUp(event.username, event.email, event.password, event.prePassword);
+    final isValid = _validateSignUp(event.username, event.email, event.password, event.prePassword);
 
     if(isValid) {
       final user = await repository.signUp(event.username, event.email, event.password);
@@ -54,7 +64,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void signIn(AuthSignInEvent event, Emitter emit) async {
     emit(const AuthState.loading());
-    final isValid = validateSignIn(event.email, event.password);
+    final isValid = _validateSignIn(event.email, event.password);
     if(isValid) {
       final user = await repository.signIn(event.email, event.password);
       if(user != null) {
@@ -67,11 +77,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  bool validateSignIn(String email, String password) {
+  bool _validateSignIn(String email, String password) {
     return email.length > 6 && password.length > 4;
   }
 
-  bool validateSignUp(String username, String email, String password, String prePassword) {
+  bool _validateDeleteAccount(String password) {
+    return password.length > 4;
+  }
+
+  bool _validateSignUp(String username, String email, String password, String prePassword) {
     return email.length > 6 && password.length > 4 && password == prePassword && username.length > 1;
   }
 }

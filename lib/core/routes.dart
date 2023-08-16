@@ -26,4 +26,8 @@ sealed class AppRoute {
   static feedToDetail(BuildContext context, Announcement announcement, Category category) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => DetailScreen(announcement: announcement, category: category,)));
   }
+
+  static close(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

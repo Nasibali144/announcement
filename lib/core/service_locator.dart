@@ -18,7 +18,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<DataRepository>(() => DataRepositoryImpl(database: FirebaseDatabase.instance, storage: FirebaseStorage.instance));
 
   /// bloc
+  /// TODO: go to factory all bloc
   locator.registerFactory<AuthBloc>(() => AuthBloc(repository: locator()));
-  locator.registerLazySingleton<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
-  locator.registerLazySingleton<DataBloc>(() => DataBloc(dataRepository: locator(), authRepository: locator()));
+  locator.registerFactory<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
+  locator.registerFactory<DataBloc>(() => DataBloc(dataRepository: locator(), authRepository: locator()));
 }

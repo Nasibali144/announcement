@@ -23,7 +23,7 @@ mixin _$AuthEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ mixin _$AuthEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) =>
       throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ mixin _$AuthEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) =>
@@ -175,7 +175,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) {
     return signIn(email, password);
@@ -189,7 +189,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) {
     return signIn?.call(email, password);
@@ -203,7 +203,7 @@ class _$AuthSignInEvent implements AuthSignInEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) {
@@ -364,7 +364,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) {
     return signUp(username, email, password, prePassword);
@@ -378,7 +378,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) {
     return signUp?.call(username, email, password, prePassword);
@@ -392,7 +392,7 @@ class _$AuthSignUpEvent implements AuthSignUpEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) {
@@ -499,7 +499,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) {
     return signOut();
@@ -513,7 +513,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) {
     return signOut?.call();
@@ -527,7 +527,7 @@ class _$AuthSignOutEvent implements AuthSignOutEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) {
@@ -587,6 +587,8 @@ abstract class _$$AuthDeleteAccountEventCopyWith<$Res> {
   factory _$$AuthDeleteAccountEventCopyWith(_$AuthDeleteAccountEvent value,
           $Res Function(_$AuthDeleteAccountEvent) then) =
       __$$AuthDeleteAccountEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String password});
 }
 
 /// @nodoc
@@ -596,26 +598,52 @@ class __$$AuthDeleteAccountEventCopyWithImpl<$Res>
   __$$AuthDeleteAccountEventCopyWithImpl(_$AuthDeleteAccountEvent _value,
       $Res Function(_$AuthDeleteAccountEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? password = null,
+  }) {
+    return _then(_$AuthDeleteAccountEvent(
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
-  const _$AuthDeleteAccountEvent();
+  const _$AuthDeleteAccountEvent(this.password);
+
+  @override
+  final String password;
 
   @override
   String toString() {
-    return 'AuthEvent.deleteAccount()';
+    return 'AuthEvent.deleteAccount(password: $password)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthDeleteAccountEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthDeleteAccountEvent &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, password);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthDeleteAccountEventCopyWith<_$AuthDeleteAccountEvent> get copyWith =>
+      __$$AuthDeleteAccountEventCopyWithImpl<_$AuthDeleteAccountEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -625,10 +653,10 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) {
-    return deleteAccount();
+    return deleteAccount(password);
   }
 
   @override
@@ -639,10 +667,10 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) {
-    return deleteAccount?.call();
+    return deleteAccount?.call(password);
   }
 
   @override
@@ -653,12 +681,12 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) {
     if (deleteAccount != null) {
-      return deleteAccount();
+      return deleteAccount(password);
     }
     return orElse();
   }
@@ -705,7 +733,13 @@ class _$AuthDeleteAccountEvent implements AuthDeleteAccountEvent {
 }
 
 abstract class AuthDeleteAccountEvent implements AuthEvent {
-  const factory AuthDeleteAccountEvent() = _$AuthDeleteAccountEvent;
+  const factory AuthDeleteAccountEvent(final String password) =
+      _$AuthDeleteAccountEvent;
+
+  String get password;
+  @JsonKey(ignore: true)
+  _$$AuthDeleteAccountEventCopyWith<_$AuthDeleteAccountEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -751,7 +785,7 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
             String username, String email, String password, String prePassword)
         signUp,
     required TResult Function() signOut,
-    required TResult Function() deleteAccount,
+    required TResult Function(String password) deleteAccount,
     required TResult Function() getAccount,
   }) {
     return getAccount();
@@ -765,7 +799,7 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult? Function()? signOut,
-    TResult? Function()? deleteAccount,
+    TResult? Function(String password)? deleteAccount,
     TResult? Function()? getAccount,
   }) {
     return getAccount?.call();
@@ -779,7 +813,7 @@ class _$AuthGetAccountEvent implements AuthGetAccountEvent {
             String username, String email, String password, String prePassword)?
         signUp,
     TResult Function()? signOut,
-    TResult Function()? deleteAccount,
+    TResult Function(String password)? deleteAccount,
     TResult Function()? getAccount,
     required TResult orElse(),
   }) {

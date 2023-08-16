@@ -1,3 +1,4 @@
+import 'package:announcement/core/routes.dart';
 import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/repositories/auth_repository.dart';
@@ -6,16 +7,16 @@ import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({Key? key}) : super(key: key);
-  final bloc = locator.get<AuthBloc>()..add(const AuthGetAccountEvent());
-  final dataBloc = locator.get<DataBloc>()/*..add(DataMyEvent(locator.get<AuthRepository>().user!.uid))*/;
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<AuthBloc>()..add(const AuthGetAccountEvent());
+    final dataBloc = context.read<DataBloc>()..add(DataMyEvent(locator.get<AuthRepository>().user!.uid));
+
     return Scaffold(
       /// appbar
       appBar: AppBar(
@@ -49,7 +50,10 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               child: TextButton(
-                onPressed: () => bloc.add(const AuthDeleteAccountEvent()),
+                onPressed: () {
+                  AppRoute.close(context);
+                  Util.dialogDeleteAccountInfo(context: context);
+                },
                 child: const Text("Delete Account"),
               ),
             )
@@ -57,12 +61,13 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
 
+      /// body
       body: Column(
         children: [
           BlocBuilder<AuthBloc, AuthState>(
             bloc: bloc,
             builder: (context, state) {
-              if(state is AuthSuccessState) {
+              if(state is AuthSuccessState && state.user != null) {
                 final user = state.user!;
                 return Column(
                   children: [
@@ -205,7 +210,7 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                   color: Colors.purple),
                               child: Text(
-                                "Posts",
+                                "Announcement",
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
@@ -216,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
                               height: 50,
                               width: MediaQuery.sizeOf(context).width / 3,
                               child: Text(
-                                "Followers",
+                                "Likes",
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
@@ -226,6 +231,14 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                   ],
+                );
+              }
+
+              if(state is AuthLoadingState) {
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               }
 
@@ -256,11 +269,6 @@ class ProfileScreen extends StatelessWidget {
                 );
               }
 
-              if (state.status == DataStatus.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
 
               return const SizedBox.shrink();
             },

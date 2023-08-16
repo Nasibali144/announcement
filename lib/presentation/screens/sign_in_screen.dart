@@ -1,5 +1,4 @@
 import 'package:announcement/core/routes.dart';
-import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/gestures.dart';
@@ -11,15 +10,16 @@ class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final bloc = locator.get<AuthBloc>();
 
-  void signIn() {
+
+  void signIn(AuthBloc bloc) {
     bloc.add(AuthSignInEvent(
         emailController.text.trim(), passwordController.text.trim()));
   }
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<AuthBloc>();
     return BlocListener<AuthBloc, AuthState>(
       bloc: bloc,
       listener: (context, state) {
@@ -62,7 +62,7 @@ class SignInScreen extends StatelessWidget {
                       height: 30,
                     ),
                     ElevatedButton(
-                      onPressed: signIn,
+                      onPressed: () => signIn(bloc),
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size(MediaQuery.sizeOf(context).width, 50)),
                       child: const Text("Sign In"),

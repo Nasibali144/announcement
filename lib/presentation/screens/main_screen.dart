@@ -14,10 +14,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
   final PageController screenController = PageController();
-  final bloc = locator.get<AuthBloc>();
+
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<AuthBloc>();
     return BlocListener<AuthBloc, AuthState>(
       bloc: bloc,
       listener: (context, state) {
@@ -34,11 +35,7 @@ class MainScreen extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AnnouncementBloc>(create: (context) => locator<AnnouncementBloc>()),
-          BlocProvider<DataBloc>(create: (context) {
-            final dataBloc = locator<DataBloc>();
-            dataBloc.add(const DataCategoryEvent());
-            return dataBloc;
-          }),
+          BlocProvider<DataBloc>(create: (context) => locator<DataBloc>()..add(const DataCategoryEvent())),
         ],
         child: Scaffold(
 
@@ -48,7 +45,7 @@ class MainScreen extends StatelessWidget {
             controller: screenController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              HomeScreen(),
+              const HomeScreen(),
               UploadScreen(
                 screenController: screenController,
               ),
@@ -75,3 +72,4 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
