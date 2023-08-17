@@ -304,8 +304,7 @@ class MessageTextField extends StatelessWidget {
             border: InputBorder.none,
             suffixIcon: IconButton(
               onPressed: () {
-                messageBloc.add(
-                    MessageCreateEvent(controller.text.trim(), announcementId));
+                messageBloc.add(MessageCreateEvent(controller.text.trim(), announcementId));
               },
               icon: BlocConsumer<MessageBloc, MessageState>(
                 bloc: messageBloc,
@@ -374,7 +373,7 @@ class DiscussionView extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        message.messages,
+                        "${message.messages}\n${message.userName}",
                         softWrap: true,
                         textAlign: TextAlign.justify,
                       ),
@@ -441,8 +440,7 @@ class DiscussionView extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      message.messages,
-                      softWrap: true,
+                      "${message.messages}\n${message.userName}",                      softWrap: true,
                       textAlign: TextAlign.justify,
                     ),
                   ),
