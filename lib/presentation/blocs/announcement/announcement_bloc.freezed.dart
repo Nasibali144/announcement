@@ -373,8 +373,6 @@ abstract class _$$DeleteDataEventCopyWith<$Res> {
       __$$DeleteDataEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Announcement announcement, String categoryName});
-
-  $AnnouncementCopyWith<$Res> get announcement;
 }
 
 /// @nodoc
@@ -401,14 +399,6 @@ class __$$DeleteDataEventCopyWithImpl<$Res>
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AnnouncementCopyWith<$Res> get announcement {
-    return $AnnouncementCopyWith<$Res>(_value.announcement, (value) {
-      return _then(_value.copyWith(announcement: value));
-    });
   }
 }
 
@@ -869,8 +859,6 @@ abstract class _$$LikeEventCopyWith<$Res> {
       __$$LikeEventCopyWithImpl<$Res>;
   @useResult
   $Res call({Announcement announcement});
-
-  $AnnouncementCopyWith<$Res> get announcement;
 }
 
 /// @nodoc
@@ -892,14 +880,6 @@ class __$$LikeEventCopyWithImpl<$Res>
           : announcement // ignore: cast_nullable_to_non_nullable
               as Announcement,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AnnouncementCopyWith<$Res> get announcement {
-    return $AnnouncementCopyWith<$Res>(_value.announcement, (value) {
-      return _then(_value.copyWith(announcement: value));
-    });
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:announcement/domain/repositories/data_repository.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:announcement/presentation/blocs/data/data_bloc.dart';
+import 'package:announcement/presentation/blocs/message/message_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -22,4 +23,5 @@ Future<void> setupLocator() async {
   locator.registerFactory<AuthBloc>(() => AuthBloc(repository: locator()));
   locator.registerFactory<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
   locator.registerFactory<DataBloc>(() => DataBloc(dataRepository: locator(), authRepository: locator()));
+  locator.registerFactory<MessageBloc>(() => MessageBloc(announcementRepository: locator(), authRepository: locator()));
 }

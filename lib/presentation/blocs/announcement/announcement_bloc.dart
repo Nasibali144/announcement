@@ -88,7 +88,8 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
   }
 
   void data(AnnouncementDataEvent event, Emitter emit) async {
-    final stream = repository.data(event.announcementId);
+    final uid = locator<AuthRepository>().user!.uid;
+    final stream = repository.data(event.announcementId, uid);
     emit(state.copyWith(status: Status.success, stream: stream));
   }
 }

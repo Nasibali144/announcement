@@ -4,6 +4,7 @@ import 'package:announcement/core/folder_names.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
 import 'package:announcement/domain/models/member/member_model.dart';
+import 'package:announcement/domain/models/message/message_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' as fn;
@@ -12,7 +13,8 @@ abstract class AnnouncementRepository {
   Future<bool> upload(Announcement announcement, List<File> files, String categoryName);
   Future<bool> delete(Announcement announcement);
   Future<bool> like(Announcement announcement, String uid);
-  Stream<Announcement> data(String announcementId);
+  Stream<Announcement> data(String announcementId, String uid);
+  Future<bool> writeMessage({required String announcementId, required String message, required Member user});
 }
 
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
@@ -127,16 +129,18 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
 
       return true;
     } catch (e) {
-      print(e);
+      fn.debugPrint(e.toString());
       return false;
     }
   }
 
   @override
-  Stream<Announcement> data(String announcementId) {
+  Stream<Announcement> data(String announcementId, String uid) {
     final transform = StreamTransformer<DatabaseEvent, Announcement>.fromHandlers(
       handleData: (snapshot, sink) {
-        sink.add(Announcement.fromJson(Map<String, Object?>.from(snapshot.snapshot.value as Map)));
+        final item = Announcement.fromJson(Map<String, Object?>.from(snapshot.snapshot.value as Map));
+        final result = item.discussion.map((message) => message.userId == uid ? message.copyWith(isMe: true) : message).toList();
+        sink.add(item.copyWith(discussion: result));
       },
       handleError: (error, stackTrace, sink) {
         fn.debugPrint("Error: $error\nStackTrace: $stackTrace");
@@ -145,8 +149,27 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
         fn.debugPrint("Completed Transformation!");
       }
     );
-    final stream = database.ref(Folder.announcement).child(announcementId).onValue;
-    return transform.bind(stream);
+    final stream = database.ref(Folder.announcement).child(announcementId).onValue.asBroadcastStream();
+    return transform.bind(stream).asBroadcastStream();
+  }
+
+  @override
+  Future<bool> writeMessage({required String announcementId, required String message, required Member user}) async {
+    try {
+      final path = database.ref(Folder.announcement).child(announcementId);
+      final json = await path.get();
+      fn.debugPrint("Json: $json");
+      final announcement = Announcement.fromJson(Map<String, Object?>.from(json.value as Map));
+      fn.debugPrint("Announcement: $announcement");
+
+      final msg = Message(id: (announcement.discussion.length + 1).toString(), userId: user.uid, userName: user.name, userImage: user.imageUrl, createdAt: DateTime.now().toString(), modifyAt: DateTime.now().toString(), messages: message);
+
+      await path.set(announcement.copyWith(discussion: [...announcement.discussion, msg]).toJson());
+      return true;
+    } catch(e,s) {
+      fn.debugPrint("Error: $e, StackTrace: $s");
+      return false;
+    }
   }
 }
 

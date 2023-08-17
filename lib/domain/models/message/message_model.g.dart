@@ -14,6 +14,7 @@ _$_Message _$$_MessageFromJson(Map<String, dynamic> json) => _$_Message(
       createdAt: json['createdAt'] as String,
       modifyAt: json['modifyAt'] as String,
       messages: json['messages'] as String,
+      isMe: json['isMe'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_MessageToJson(_$_Message instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$$_MessageToJson(_$_Message instance) =>
       'createdAt': instance.createdAt,
       'modifyAt': instance.modifyAt,
       'messages': instance.messages,
+      'isMe': instance.isMe,
     };

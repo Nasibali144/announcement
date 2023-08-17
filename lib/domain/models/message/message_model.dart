@@ -13,7 +13,9 @@ class Message with _$Message {
     required String createdAt,
     required String modifyAt,
     required String messages,
+    @Default(false) bool isMe,
 }) = _Message;
 
   factory Message.fromJson(Map<String, Object?> json) => _$MessageFromJson(json);
 }
+

@@ -27,6 +27,7 @@ mixin _$Message {
   String get createdAt => throw _privateConstructorUsedError;
   String get modifyAt => throw _privateConstructorUsedError;
   String get messages => throw _privateConstructorUsedError;
+  bool get isMe => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $MessageCopyWith<$Res> {
       String userImage,
       String createdAt,
       String modifyAt,
-      String messages});
+      String messages,
+      bool isMe});
 }
 
 /// @nodoc
@@ -68,6 +70,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? createdAt = null,
     Object? modifyAt = null,
     Object? messages = null,
+    Object? isMe = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -98,6 +101,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as String,
+      isMe: null == isMe
+          ? _value.isMe
+          : isMe // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -116,7 +123,8 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String userImage,
       String createdAt,
       String modifyAt,
-      String messages});
+      String messages,
+      bool isMe});
 }
 
 /// @nodoc
@@ -136,6 +144,7 @@ class __$$_MessageCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? modifyAt = null,
     Object? messages = null,
+    Object? isMe = null,
   }) {
     return _then(_$_Message(
       id: null == id
@@ -166,6 +175,10 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as String,
+      isMe: null == isMe
+          ? _value.isMe
+          : isMe // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -180,7 +193,8 @@ class _$_Message implements _Message {
       required this.userImage,
       required this.createdAt,
       required this.modifyAt,
-      required this.messages});
+      required this.messages,
+      this.isMe = false});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
       _$$_MessageFromJson(json);
@@ -199,10 +213,13 @@ class _$_Message implements _Message {
   final String modifyAt;
   @override
   final String messages;
+  @override
+  @JsonKey()
+  final bool isMe;
 
   @override
   String toString() {
-    return 'Message(id: $id, userId: $userId, userName: $userName, userImage: $userImage, createdAt: $createdAt, modifyAt: $modifyAt, messages: $messages)';
+    return 'Message(id: $id, userId: $userId, userName: $userName, userImage: $userImage, createdAt: $createdAt, modifyAt: $modifyAt, messages: $messages, isMe: $isMe)';
   }
 
   @override
@@ -221,13 +238,14 @@ class _$_Message implements _Message {
             (identical(other.modifyAt, modifyAt) ||
                 other.modifyAt == modifyAt) &&
             (identical(other.messages, messages) ||
-                other.messages == messages));
+                other.messages == messages) &&
+            (identical(other.isMe, isMe) || other.isMe == isMe));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, userName, userImage,
-      createdAt, modifyAt, messages);
+      createdAt, modifyAt, messages, isMe);
 
   @JsonKey(ignore: true)
   @override
@@ -251,7 +269,8 @@ abstract class _Message implements Message {
       required final String userImage,
       required final String createdAt,
       required final String modifyAt,
-      required final String messages}) = _$_Message;
+      required final String messages,
+      final bool isMe}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
@@ -269,6 +288,8 @@ abstract class _Message implements Message {
   String get modifyAt;
   @override
   String get messages;
+  @override
+  bool get isMe;
   @override
   @JsonKey(ignore: true)
   _$$_MessageCopyWith<_$_Message> get copyWith =>

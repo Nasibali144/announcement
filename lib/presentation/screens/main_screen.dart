@@ -1,9 +1,6 @@
 import 'package:announcement/core/routes.dart';
-import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
-import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
-import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:announcement/presentation/screens/home_screen.dart';
 import 'package:announcement/presentation/screens/profile_screen.dart';
 import 'package:announcement/presentation/screens/upload_screen.dart';

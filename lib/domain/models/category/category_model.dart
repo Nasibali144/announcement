@@ -41,12 +41,20 @@ final categories = [
     "imageUrl": "https://img.icons8.com/?size=512&id=33934&format=png"
   },
   {
+    "id": "computer",
+    "name": "Computer",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=1345&format=png"
+  },
+  {
     "id": "phone",
     "name": "Phone",
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=1bcRmKcRbKIb&format=png"
   },
   {
     "id": "appliances",
@@ -54,7 +62,7 @@ final categories = [
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=poofZ8KYLKLi&format=png"
   },
   {
     "id": "tv",
@@ -62,7 +70,7 @@ final categories = [
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=540&format=png"
   },
   {
     "id": "accessory",
@@ -70,7 +78,7 @@ final categories = [
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=45811&format=png"
   },
   {
     "id": "kitchenware",
@@ -78,7 +86,7 @@ final categories = [
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=25825&format=png"
   },
   {
     "id": "cars",
@@ -86,6 +94,14 @@ final categories = [
     "description": "none",
     "createdAt": "2023-08-14T22:33:16.680",
     "modifyAt": "2023-08-14T22:33:16.680",
-    "imageUrl": "https://img.icons8.com/?size=512&id=85457&format=png"
+    "imageUrl": "https://img.icons8.com/?size=512&id=12666&format=png"
+  },
+  {
+    "id": "all",
+    "name": "All",
+    "description": "none",
+    "createdAt": "2023-08-14T22:33:16.680",
+    "modifyAt": "2023-08-14T22:33:16.680",
+    "imageUrl": "https://img.icons8.com/?size=512&id=5479&format=png"
   },
 ];
