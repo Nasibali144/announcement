@@ -17,12 +17,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   void _create(MessageCreateEvent event, Emitter emit) async {
     emit(state.copyWith(status: MessageStatus.loading));
     final member = await authRepository.gerUserInfo();
-    announcementRepository.writeMessage(announcementId: event.announcementId, message: event.message, user: member);
-    // final result = await announcementRepository.writeMessage(announcementId: event.announcementId, message: event.message, user: member);
-    // if(result) {
-    //   emit(state.copyWith(status: MessageStatus.success));
-    // } else {
-    //   emit(state.copyWith(status: MessageStatus.failure));
-    // }
+    final result = await announcementRepository.writeMessage(announcementId: event.announcementId, message: event.message, user: member);
+    if(result) {
+      emit(state.copyWith(status: MessageStatus.success));
+    } else {
+      emit(state.copyWith(status: MessageStatus.failure));
+    }
   }
 }

@@ -262,7 +262,9 @@ class DetailScreen extends StatelessWidget {
                             const SizedBox(height: 65),
                           ],
                         ),
-                        MessageTextField(announcementId: ancmt.id,),
+                        MessageTextField(
+                          announcementId: ancmt.id,
+                        ),
                       ],
                     ),
                   ),
@@ -302,18 +304,29 @@ class MessageTextField extends StatelessWidget {
             border: InputBorder.none,
             suffixIcon: IconButton(
               onPressed: () {
-                messageBloc.add(MessageCreateEvent(controller.text.trim(), announcementId));
+                messageBloc.add(
+                    MessageCreateEvent(controller.text.trim(), announcementId));
               },
               icon: BlocConsumer<MessageBloc, MessageState>(
                 bloc: messageBloc,
                 listener: (context, state) {
                   if (state.status == MessageStatus.failure) {
-                    Util.msg(context, "Something error, try again later!", color: Colors.red);
+                    Util.msg(context, "Something error, try again later!",
+                        color: Colors.red);
+                  }
+
+                  if (state.status == MessageStatus.success) {
+                    controller.clear();
                   }
                 },
                 builder: (context, state) {
                   if (state.status == MessageStatus.loading) {
-                    return const Center(child: CupertinoActivityIndicator());
+                    return Container(
+                      height: 40,
+                      width: 40,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator.adaptive(),
+                    );
                   }
 
                   return const Icon(CupertinoIcons.paperplane_fill);
@@ -328,6 +341,7 @@ class MessageTextField extends StatelessWidget {
 
 class DiscussionView extends StatelessWidget {
   final Announcement ancmt;
+
   const DiscussionView({Key? key, required this.ancmt}) : super(key: key);
 
   @override
@@ -342,31 +356,21 @@ class DiscussionView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.end,
-                  crossAxisAlignment:
-                  CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                          maxWidth:
-                          MediaQuery.sizeOf(context)
-                              .width *
-                              .65),
+                          maxWidth: MediaQuery.sizeOf(context).width * .65),
                       padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.only(
-                          bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(
-                            248, 222, 192, 0.6),
-                        border: Border.all(
-                            color: Colors.amber),
-                        borderRadius:
-                        const BorderRadius.only(
+                        color: const Color.fromRGBO(248, 222, 192, 0.6),
+                        border: Border.all(color: Colors.amber),
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(15),
                           topRight: Radius.circular(15),
-                          bottomLeft:
-                          Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
                         ),
                       ),
                       child: Text(
@@ -381,16 +385,13 @@ class DiscussionView extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Colors.orange,
-                            width: 2),
+                        border: Border.all(color: Colors.orange, width: 2),
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                              message.userImage
-                                  .isNotEmpty
-                                  ? message.userImage
-                                  : "https://img.icons8.com/?size=512&id=23264&format=png"),
+                          image: CachedNetworkImageProvider(message
+                                  .userImage.isNotEmpty
+                              ? message.userImage
+                              : "https://img.icons8.com/?size=512&id=23264&format=png"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -414,32 +415,25 @@ class DiscussionView extends StatelessWidget {
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.cyanAccent,
-                          width: 2),
+                      border: Border.all(color: Colors.cyanAccent, width: 2),
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                              message.userImage
-                                  .isNotEmpty
-                                  ? message.userImage
-                                  : "https://img.icons8.com/?size=512&id=23264&format=png"),
+                          image: CachedNetworkImageProvider(message
+                                  .userImage.isNotEmpty
+                              ? message.userImage
+                              : "https://img.icons8.com/?size=512&id=23264&format=png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   const SizedBox(width: 5),
                   Container(
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.sizeOf(context)
-                            .width *
-                            .65),
+                        maxWidth: MediaQuery.sizeOf(context).width * .65),
                     padding: const EdgeInsets.all(10),
-                    margin:
-                    const EdgeInsets.only(bottom: 5),
+                    margin: const EdgeInsets.only(bottom: 5),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
-                      border:
-                      Border.all(color: Colors.teal),
+                      border: Border.all(color: Colors.teal),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(15),
@@ -462,4 +456,3 @@ class DiscussionView extends StatelessWidget {
     );
   }
 }
-
