@@ -21,7 +21,7 @@ Future<void> setupLocator() async {
   /// bloc
   /// TODO: go to factory all bloc
   locator.registerFactory<AuthBloc>(() => AuthBloc(repository: locator()));
-  locator.registerFactory<AnnouncementBloc>(() => AnnouncementBloc(repository: locator()));
+  locator.registerFactory<AnnouncementBloc>(() => AnnouncementBloc(repository: locator(), authRepository: locator()));
   locator.registerFactory<DataBloc>(() => DataBloc(dataRepository: locator(), authRepository: locator()));
   locator.registerFactory<MessageBloc>(() => MessageBloc(announcementRepository: locator(), authRepository: locator()));
 }

@@ -908,6 +908,7 @@ mixin _$AuthState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -918,6 +919,7 @@ mixin _$AuthState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -928,6 +930,7 @@ mixin _$AuthState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -939,6 +942,7 @@ mixin _$AuthState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -950,6 +954,7 @@ mixin _$AuthState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -960,6 +965,7 @@ mixin _$AuthState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1026,6 +1032,7 @@ class _$AuthInitialState implements AuthInitialState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1039,6 +1046,7 @@ class _$AuthInitialState implements AuthInitialState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1052,6 +1060,7 @@ class _$AuthInitialState implements AuthInitialState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1069,6 +1078,7 @@ class _$AuthInitialState implements AuthInitialState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1083,6 +1093,7 @@ class _$AuthInitialState implements AuthInitialState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1096,6 +1107,7 @@ class _$AuthInitialState implements AuthInitialState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1153,6 +1165,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1166,6 +1179,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1179,6 +1193,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1196,6 +1211,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1210,6 +1226,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1223,6 +1240,7 @@ class _$AuthLoadingState implements AuthLoadingState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1328,6 +1346,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1341,6 +1360,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1354,6 +1374,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1371,6 +1392,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1385,6 +1407,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1398,6 +1421,7 @@ class _$AuthSuccessState implements AuthSuccessState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1418,6 +1442,182 @@ abstract class AuthSuccessState implements AuthState {
   Member? get user;
   @JsonKey(ignore: true)
   _$$AuthSuccessStateCopyWith<_$AuthSuccessState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$MemberSuccessStateCopyWith<$Res> {
+  factory _$$MemberSuccessStateCopyWith(_$MemberSuccessState value,
+          $Res Function(_$MemberSuccessState) then) =
+      __$$MemberSuccessStateCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Member user});
+
+  $MemberCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$MemberSuccessStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$MemberSuccessState>
+    implements _$$MemberSuccessStateCopyWith<$Res> {
+  __$$MemberSuccessStateCopyWithImpl(
+      _$MemberSuccessState _value, $Res Function(_$MemberSuccessState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$MemberSuccessState(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as Member,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberCopyWith<$Res> get user {
+    return $MemberCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$MemberSuccessState implements MemberSuccessState {
+  const _$MemberSuccessState({required this.user});
+
+  @override
+  final Member user;
+
+  @override
+  String toString() {
+    return 'AuthState.successMember(user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MemberSuccessState &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MemberSuccessStateCopyWith<_$MemberSuccessState> get copyWith =>
+      __$$MemberSuccessStateCopyWithImpl<_$MemberSuccessState>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
+    required TResult Function(String? message) signOutSuccess,
+    required TResult Function(String? message) deleteAccountSuccess,
+    required TResult Function(String message) failure,
+  }) {
+    return successMember(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
+    TResult? Function(String? message)? signOutSuccess,
+    TResult? Function(String? message)? deleteAccountSuccess,
+    TResult? Function(String message)? failure,
+  }) {
+    return successMember?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
+    TResult Function(String? message)? signOutSuccess,
+    TResult Function(String? message)? deleteAccountSuccess,
+    TResult Function(String message)? failure,
+    required TResult orElse(),
+  }) {
+    if (successMember != null) {
+      return successMember(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthInitialState value) initial,
+    required TResult Function(AuthLoadingState value) loading,
+    required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
+    required TResult Function(SignOutSuccessState value) signOutSuccess,
+    required TResult Function(DeleteAccountSuccessState value)
+        deleteAccountSuccess,
+    required TResult Function(AuthFailureState value) failure,
+  }) {
+    return successMember(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AuthInitialState value)? initial,
+    TResult? Function(AuthLoadingState value)? loading,
+    TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
+    TResult? Function(SignOutSuccessState value)? signOutSuccess,
+    TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
+    TResult? Function(AuthFailureState value)? failure,
+  }) {
+    return successMember?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthInitialState value)? initial,
+    TResult Function(AuthLoadingState value)? loading,
+    TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
+    TResult Function(SignOutSuccessState value)? signOutSuccess,
+    TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
+    TResult Function(AuthFailureState value)? failure,
+    required TResult orElse(),
+  }) {
+    if (successMember != null) {
+      return successMember(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class MemberSuccessState implements AuthState {
+  const factory MemberSuccessState({required final Member user}) =
+      _$MemberSuccessState;
+
+  Member get user;
+  @JsonKey(ignore: true)
+  _$$MemberSuccessStateCopyWith<_$MemberSuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1489,6 +1689,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1502,6 +1703,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1515,6 +1717,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1532,6 +1735,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1546,6 +1750,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1559,6 +1764,7 @@ class _$SignOutSuccessState implements SignOutSuccessState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1650,6 +1856,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1663,6 +1870,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1676,6 +1884,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1693,6 +1902,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1707,6 +1917,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1720,6 +1931,7 @@ class _$DeleteAccountSuccessState implements DeleteAccountSuccessState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,
@@ -1809,6 +2021,7 @@ class _$AuthFailureState implements AuthFailureState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message, Member? user) success,
+    required TResult Function(Member user) successMember,
     required TResult Function(String? message) signOutSuccess,
     required TResult Function(String? message) deleteAccountSuccess,
     required TResult Function(String message) failure,
@@ -1822,6 +2035,7 @@ class _$AuthFailureState implements AuthFailureState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(String? message, Member? user)? success,
+    TResult? Function(Member user)? successMember,
     TResult? Function(String? message)? signOutSuccess,
     TResult? Function(String? message)? deleteAccountSuccess,
     TResult? Function(String message)? failure,
@@ -1835,6 +2049,7 @@ class _$AuthFailureState implements AuthFailureState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message, Member? user)? success,
+    TResult Function(Member user)? successMember,
     TResult Function(String? message)? signOutSuccess,
     TResult Function(String? message)? deleteAccountSuccess,
     TResult Function(String message)? failure,
@@ -1852,6 +2067,7 @@ class _$AuthFailureState implements AuthFailureState {
     required TResult Function(AuthInitialState value) initial,
     required TResult Function(AuthLoadingState value) loading,
     required TResult Function(AuthSuccessState value) success,
+    required TResult Function(MemberSuccessState value) successMember,
     required TResult Function(SignOutSuccessState value) signOutSuccess,
     required TResult Function(DeleteAccountSuccessState value)
         deleteAccountSuccess,
@@ -1866,6 +2082,7 @@ class _$AuthFailureState implements AuthFailureState {
     TResult? Function(AuthInitialState value)? initial,
     TResult? Function(AuthLoadingState value)? loading,
     TResult? Function(AuthSuccessState value)? success,
+    TResult? Function(MemberSuccessState value)? successMember,
     TResult? Function(SignOutSuccessState value)? signOutSuccess,
     TResult? Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult? Function(AuthFailureState value)? failure,
@@ -1879,6 +2096,7 @@ class _$AuthFailureState implements AuthFailureState {
     TResult Function(AuthInitialState value)? initial,
     TResult Function(AuthLoadingState value)? loading,
     TResult Function(AuthSuccessState value)? success,
+    TResult Function(MemberSuccessState value)? successMember,
     TResult Function(SignOutSuccessState value)? signOutSuccess,
     TResult Function(DeleteAccountSuccessState value)? deleteAccountSuccess,
     TResult Function(AuthFailureState value)? failure,

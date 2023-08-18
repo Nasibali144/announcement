@@ -139,6 +139,7 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
     final transform = StreamTransformer<DatabaseEvent, Announcement>.fromHandlers(
       handleData: (snapshot, sink) {
         final item = Announcement.fromJson(Map<String, Object?>.from(snapshot.snapshot.value as Map));
+        item.isFavorite = item.likes.contains(uid);
         final result = item.discussion.map((message) => message.userId == uid ? message.copyWith(isMe: true) : message).toList();
         sink.add(item.copyWith(discussion: result));
       },

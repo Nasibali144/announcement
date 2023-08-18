@@ -1,6 +1,7 @@
 import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
+import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,20 +14,18 @@ class LikeButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final bloc = locator<AnnouncementBloc>();
-    bool isFavorite = announcement.isFavorite;
     return IconButton(
       onPressed: () {
+        announcement.isFavorite = !announcement.isFavorite;
         bloc.add(LikeEvent(announcement));
       },
-      icon: BlocConsumer<AnnouncementBloc, AnnouncementState>(
+      icon: BlocBuilder<AnnouncementBloc, AnnouncementState>(
         bloc: bloc,
-        listener: (context, state) {
-          if(state.status == Status.success) {
-            isFavorite = !isFavorite;
-          }
+        buildWhen: (previous, current) {
+          return current.status == Status.successLike;
         },
         builder: (context, state) {
-          return Icon(isFavorite ? Icons.favorite : Icons.favorite_outline);
+          return Icon(announcement.isFavorite ? Icons.favorite : Icons.favorite_outline);
         },
       ),
       color: Colors.red,

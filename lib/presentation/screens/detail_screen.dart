@@ -23,7 +23,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>()
+    context.read<AuthBloc>()
       ..add(AuthGetAccountEvent(uid: announcement.userId))
       ..add(const AuthGetAccountEvent());
     final announcementBloc = context.read<AnnouncementBloc>()
@@ -33,6 +33,9 @@ class DetailScreen extends StatelessWidget {
       create: (context) => locator<MessageBloc>(),
       child: BlocBuilder<AnnouncementBloc, AnnouncementState>(
         bloc: announcementBloc,
+        buildWhen: (previous, current) {
+          return current.stream != null;
+        },
         builder: (context, state) {
           return StreamBuilder<Announcement>(
               initialData: announcement,
@@ -58,62 +61,8 @@ class DetailScreen extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                CarouselSlider(
-                                    items: List.generate(
-                                      ancmt.images.length,
-                                      (index) => CachedNetworkImage(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height:
-                                            MediaQuery.sizeOf(context).width,
-                                        fit: BoxFit.cover,
-                                        imageUrl: ancmt.images[index],
-                                      ),
-                                    ),
-                                    options: CarouselOptions(
-                                      height: MediaQuery.sizeOf(context).width *
-                                          .75,
-                                      aspectRatio: 16 / 9,
-                                      viewportFraction: 0.7,
-                                      initialPage: 0,
-                                      enableInfiniteScroll: true,
-                                      reverse: false,
-                                      autoPlay: true,
-                                      autoPlayInterval:
-                                          const Duration(seconds: 3),
-                                      autoPlayAnimationDuration:
-                                          const Duration(milliseconds: 800),
-                                      autoPlayCurve: Curves.fastOutSlowIn,
-                                      enlargeCenterPage: true,
-                                      enlargeFactor: 0.3,
-                                      // onPageChanged: (){},
-                                      scrollDirection: Axis.horizontal,
-                                    )),
-                                PopupMenuButton<String>(
-                                  initialValue: "Delete",
-                                  itemBuilder: (BuildContext context) {
-                                    return [
-                                      const PopupMenuItem(
-                                        value: "Delete",
-                                        child: Text("Delete"),
-                                      ),
-                                      const PopupMenuItem(
-                                        value: "Edit",
-                                        child: Text("Edit"),
-                                      ),
-                                    ];
-                                  },
-                                  child: IconButton(
-                                    onPressed: null,
-                                    style: IconButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.white.withOpacity(0.25)),
-                                    icon: const Icon(
-                                      Icons.menu,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ),
+                                SliderImageCarousel(images: announcement.images),
+                                const OptionsMenu(),
                               ],
                             ),
 
@@ -121,6 +70,7 @@ class DetailScreen extends StatelessWidget {
                             const SizedBox(height: 10),
                             const Divider(),
                             const SizedBox(height: 10),
+
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -134,24 +84,10 @@ class DetailScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       /// category
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 2, right: 3, left: 3),
-                                        decoration: BoxDecoration(
-                                            color: Colors.teal.shade400,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(5))),
-                                        child: Text(
-                                          category.name,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
+                                      CategoryView(title: category.name,),
 
                                       /// like
-                                      LikeButton(announcement: ancmt),
+                                      LikeButton(announcement: announcement),
                                     ],
                                   ),
                                   const SizedBox(height: 10),
@@ -214,43 +150,7 @@ class DetailScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            BlocBuilder<AuthBloc, AuthState>(
-                              bloc: authBloc,
-                              builder: (context, state) {
-                                Member? member;
-                                if (state is AuthSuccessState) {
-                                  member = state.user;
-                                }
-
-                                return ListTile(
-                                  leading: Container(
-                                    height: 60,
-                                    width: 60,
-                                    padding: const EdgeInsets.all(1.5),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(member !=
-                                                    null &&
-                                                member.imageUrl.isNotEmpty
-                                            ? member.imageUrl
-                                            : "https://img.icons8.com/?size=512&id=23264&format=png"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  title: Text(member != null
-                                      ? member.name
-                                      : "Username"),
-                                  subtitle: Text(member != null
-                                      ? member.email
-                                      : "user@email.com"),
-                                  trailing: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.call)),
-                                );
-                              },
-                            ),
+                            const UserInfoView(),
 
                             /// footer
                             const SizedBox(height: 10),
@@ -451,6 +351,152 @@ class DiscussionView extends StatelessWidget {
           );
         }).toList(),
       ),
+    );
+  }
+}
+
+
+class SliderImageCarousel extends StatelessWidget {
+  final List<String> images;
+  const SliderImageCarousel({Key? key, required this.images}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+        items: List.generate(
+          images.length,
+              (index) => CachedNetworkImage(
+            width:
+            MediaQuery.of(context).size.width,
+            height:
+            MediaQuery.sizeOf(context).width,
+            fit: BoxFit.cover,
+            imageUrl: images[index],
+          ),
+        ),
+        options: CarouselOptions(
+          height: MediaQuery.sizeOf(context).width *
+              .75,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.7,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval:
+          const Duration(seconds: 3),
+          autoPlayAnimationDuration:
+          const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          enlargeFactor: 0.3,
+          // onPageChanged: (){},
+          scrollDirection: Axis.horizontal,
+        ));
+  }
+}
+
+class OptionsMenu extends StatelessWidget {
+  const OptionsMenu({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      initialValue: "Delete",
+      itemBuilder: (BuildContext context) {
+        return [
+          const PopupMenuItem(
+            value: "Delete",
+            child: Text("Delete"),
+          ),
+          const PopupMenuItem(
+            value: "Edit",
+            child: Text("Edit"),
+          ),
+        ];
+      },
+      child: IconButton(
+        onPressed: null,
+        style: IconButton.styleFrom(
+            backgroundColor:
+            Colors.white.withOpacity(0.25)),
+        icon: const Icon(
+          Icons.menu,
+          size: 30,
+        ),
+      ),
+    );
+  }
+}
+
+
+class CategoryView extends StatelessWidget {
+  final String title;
+  const CategoryView({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(
+          bottom: 2, right: 3, left: 3),
+      decoration: BoxDecoration(
+          color: Colors.teal.shade400,
+          borderRadius:
+          const BorderRadius.all(
+              Radius.circular(5))),
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}
+
+class UserInfoView extends StatelessWidget {
+  const UserInfoView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      bloc: context.read<AuthBloc>(),
+      buildWhen: (previous, current) {
+        return current is MemberSuccessState;
+      },
+      builder: (context, state) {
+        Member? member;
+        if(state is MemberSuccessState) {
+          member = state.user;
+        }
+        return ListTile(
+          leading: Container(
+            height: 60,
+            width: 60,
+            padding: const EdgeInsets.all(1.5),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(member !=
+                    null &&
+                    member.imageUrl.isNotEmpty
+                    ? member.imageUrl
+                    : "https://img.icons8.com/?size=512&id=23264&format=png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: Text(member != null
+              ? member.name
+              : "Username"),
+          subtitle: Text(member != null
+              ? member.email
+              : "user@email.com"),
+          trailing: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.call)),
+        );
+      },
     );
   }
 }

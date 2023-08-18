@@ -15,8 +15,9 @@ part 'announcement_bloc.freezed.dart';
 
 class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
   final AnnouncementRepository repository;
+  final AuthRepository authRepository;
 
-  AnnouncementBloc({required this.repository})
+  AnnouncementBloc({required this.repository, required this.authRepository})
       : super(const AnnouncementState(status: Status.initial)) {
     on<UploadEvent>(upload);
     on<DeleteDataEvent>(deleteData);
@@ -35,7 +36,7 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
     }
 
     final announcement = Announcement(
-      userId: locator<AuthRepository>().user!.uid,
+      userId: authRepository.user!.uid,
       id: "01",
       name: event.name,
       description: event.decs,
@@ -73,22 +74,22 @@ class AnnouncementBloc extends Bloc<AnnouncementEvent, AnnouncementState> {
   }
 
   void clearImages(ClearImagesEvent event, Emitter emit) async {
-    emit(const AnnouncementState(status: Status.success));
+    emit(const AnnouncementState(status: Status.successClear));
   }
 
   void like(LikeEvent event, Emitter emit) async {
     emit(const AnnouncementState(status: Status.loading));
-    final uid = locator<AuthRepository>().user!.uid;
+    final uid = authRepository.user!.uid;
     final result = await repository.like(event.announcement, uid);
     if(result) {
-      emit(const AnnouncementState(status: Status.success));
+      emit(const AnnouncementState(status: Status.successLike));
     } else {
       emit(const AnnouncementState(status: Status.failure, message: "Some thing error, try again later!!!"));
     }
   }
 
   void data(AnnouncementDataEvent event, Emitter emit) async {
-    final uid = locator<AuthRepository>().user!.uid;
+    final uid = authRepository.user!.uid;
     final stream = repository.data(event.announcementId, uid);
     emit(state.copyWith(status: Status.success, stream: stream));
   }

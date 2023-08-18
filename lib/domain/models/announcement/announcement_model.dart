@@ -1,35 +1,4 @@
 import 'package:announcement/domain/models/message/message_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-/*
-
-part 'announcement_model.freezed.dart';
-part 'announcement_model.g.dart';
-
-@freezed
-class Announcement with _$Announcement {
-
-  @JsonSerializable(explicitToJson: true)
-  const factory Announcement({
-    required String id,
-    required String name,
-    required String description,
-    required String createdAt,
-    required String modifyAt,
-    @Default([]) List<String> images,
-    required String categoryId,
-    required double price,
-    @Default(false) bool isFavorite,
-    required String phone,
-    required String userId,
-    required String address,
-    required int viewsCount,
-    @Default([]) List<String> likes,
-    @Default([]) List<Message> discussion,
-}) = _Announcement;
-
-  factory Announcement.fromJson(Map<String, Object?> json) => _$AnnouncementFromJson(json);
-}*/
 
 class Announcement {
   final String id;
@@ -40,7 +9,7 @@ class Announcement {
   final List<String> images;
   final String categoryId;
   final double price;
-  final bool isFavorite;
+  bool isFavorite;
   final String phone;
   final String userId;
   final String address;
@@ -48,7 +17,7 @@ class Announcement {
   final List<String> likes;
   final List<Message> discussion;
 
-  const Announcement({
+  Announcement({
     required this.id,
     required this.name,
     required this.description,

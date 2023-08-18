@@ -21,7 +21,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void getAccount(AuthGetAccountEvent event, Emitter emit) async {
     emit(const AuthState.loading());
     final user = await repository.gerUserInfo(uid: event.uid);
-    emit(AuthSuccessState(user: user));
+
+    if(event.uid != null) {
+      emit(MemberSuccessState(user: user));
+    } else {
+      emit(AuthSuccessState(user: user));
+    }
   }
 
   void deleteAccount(AuthDeleteAccountEvent event, Emitter emit) async {

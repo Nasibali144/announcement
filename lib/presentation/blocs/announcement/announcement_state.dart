@@ -15,4 +15,6 @@ enum Status {
   loading,
   failure,
   success,
+  successClear,
+  successLike,
 }

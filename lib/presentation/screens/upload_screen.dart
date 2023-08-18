@@ -45,6 +45,7 @@ class UploadScreen extends StatelessWidget {
           categoryController.clear();
           priceController.clear();
           phoneController.clear();
+          addressController.clear();
 
           /// navigate home work completed
           screenController.jumpToPage(0);
@@ -60,7 +61,34 @@ class UploadScreen extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            appBar: AppBar(title: const Text("Upload"), centerTitle: true,),
+            appBar: AppBar(
+              title: const Text("Upload"),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.read<AnnouncementBloc>().add(UploadEvent(
+                          name: nameController.text.trim(),
+                          decs: descController.text.trim(),
+                          phone: phoneController.text.trim(),
+                          category: Category.fromString(
+
+                              /// Warning!!!
+                              categoryController.text.trim(),
+                              context.read<DataBloc>().state.categories),
+                          price: double.tryParse(priceController.text.trim()) ??
+                              0.0,
+                          files: files,
+                          address: addressController.text.trim(),
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.cloud_upload,
+                    color: Colors.purple,
+                  ),
+                )
+              ],
+            ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(
@@ -161,10 +189,17 @@ class UploadScreen extends StatelessWidget {
                           onSelected: (category) {
                             categoryController.text = category.name;
                           },
-                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           itemBuilder: (_) {
-                            final list = context.read<DataBloc>().state.categories;
-                            return list.map((category) => PopupMenuItem(value: category, child: CategoryUi(category: category))).toList();
+                            final list =
+                                context.read<DataBloc>().state.categories;
+                            return list
+                                .map((category) => PopupMenuItem(
+                                    value: category,
+                                    child: CategoryUi(category: category)))
+                                .toList();
                           },
                           icon: const Icon(Icons.arrow_drop_down_outlined),
                         ),
@@ -188,26 +223,6 @@ class UploadScreen extends StatelessWidget {
                         controller: addressController,
                         decoration: const InputDecoration(hintText: "Address")),
                     const SizedBox(height: 20),
-                    FilledButton(
-                      onPressed: () {
-                        context.read<AnnouncementBloc>().add(UploadEvent(
-                              name: nameController.text.trim(),
-                              decs: descController.text.trim(),
-                              phone: phoneController.text.trim(),
-                              category: Category.fromString(
-
-                                  /// Warning!!!
-                                  categoryController.text.trim(),
-                                  context.read<DataBloc>().state.categories),
-                              price: double.tryParse(
-                                      priceController.text.trim()) ??
-                                  0.0,
-                              files: files,
-                              address: addressController.text.trim(),
-                            ));
-                      },
-                      child: const Text("Upload"),
-                    ),
                   ],
                 ),
               ),

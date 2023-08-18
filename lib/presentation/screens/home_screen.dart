@@ -2,6 +2,7 @@ import 'package:announcement/core/routes.dart';
 import 'package:announcement/core/utils.dart';
 import 'package:announcement/domain/models/announcement/announcement_model.dart';
 import 'package:announcement/domain/models/category/category_model.dart';
+import 'package:announcement/presentation/blocs/announcement/announcement_bloc.dart';
 import 'package:announcement/presentation/blocs/data/data_bloc.dart';
 import 'package:announcement/presentation/components/like_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,7 +17,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<DataBloc>();
     return Scaffold(
-      appBar: AppBar(title: const Text("Announcements"), centerTitle: true,),
+      appBar: AppBar(
+        title: const Text("Announcements"),
+        centerTitle: true,
+      ),
       body: BlocConsumer<DataBloc, DataState>(
         bloc: bloc,
         listener: (context, state) {
@@ -41,7 +45,8 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Category category = state.categories[index];
                     return CategoryItem(
-                      onTap: () => bloc.add(DataAnnouncementEvent(categoryId: category.id)),
+                      onTap: () => bloc
+                          .add(DataAnnouncementEvent(categoryId: category.id)),
                       category: category,
                       selectedId: state.selectedCategoryId,
                     );
@@ -57,7 +62,8 @@ class HomeScreen extends StatelessWidget {
                   itemCount: state.data.length,
                   itemBuilder: (_, i) {
                     /// TODO: this code maybe remove in the future
-                    final category = state.categories.firstWhere((element) => element.id == state.data[i].categoryId);
+                    final category = state.categories.firstWhere(
+                        (element) => element.id == state.data[i].categoryId);
 
                     final data = state.data;
                     return AnnouncementFeed(
@@ -153,15 +159,26 @@ class AnnouncementFeed extends StatelessWidget {
               alignment: const Alignment(.95, -.9),
               children: [
                 SliderImages(images: item.images),
-                LikeButton(announcement: item),
+                BlocBuilder<DataBloc, DataState>(
+                  bloc: context.read<DataBloc>(),
+                  buildWhen: (previous, current) {
+                    return current.status == DataStatus.successLike;
+                  },
+                  builder: (context, state) {
+                    return LikeButton(announcement: item);
+                  },
+                ),
               ],
             ),
             ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Text(item.name, overflow: TextOverflow.ellipsis,)),
-
+                  Expanded(
+                      child: Text(
+                    item.name,
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   const SizedBox(width: 10),
                   Text(Util.dayMonth(item.modifyAt)),
                 ],
@@ -169,7 +186,11 @@ class AnnouncementFeed extends StatelessWidget {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Text(item.description, overflow: TextOverflow.ellipsis,)),
+                  Expanded(
+                      child: Text(
+                    item.description,
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   const SizedBox(width: 10),
                   Text("\$ ${item.price.toStringAsFixed(2)}"),
                 ],
@@ -179,10 +200,13 @@ class AnnouncementFeed extends StatelessWidget {
                 width: 60,
                 padding: const EdgeInsets.all(1.5),
                 decoration: const BoxDecoration(
-                  color: Colors.greenAccent,
+                  color: Colors.white,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(CupertinoIcons.person),
+                child: const Icon(
+                  CupertinoIcons.person_alt,
+                  size: 40,
+                ),
               ),
             ),
           ],
@@ -254,4 +278,3 @@ class SliderImages extends StatelessWidget {
     );
   }
 }
-
