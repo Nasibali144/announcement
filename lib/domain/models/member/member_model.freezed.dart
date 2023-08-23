@@ -27,6 +27,7 @@ mixin _$Member {
   String get createdAt => throw _privateConstructorUsedError;
   List<String> get announcements => throw _privateConstructorUsedError;
   List<String> get likes => throw _privateConstructorUsedError;
+  List<Device> get device => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $MemberCopyWith<$Res> {
       String imageUrl,
       String createdAt,
       List<String> announcements,
-      List<String> likes});
+      List<String> likes,
+      List<Device> device});
 }
 
 /// @nodoc
@@ -68,6 +70,7 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
     Object? createdAt = null,
     Object? announcements = null,
     Object? likes = null,
+    Object? device = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -98,6 +101,10 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      device: null == device
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as List<Device>,
     ) as $Val);
   }
 }
@@ -115,7 +122,8 @@ abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
       String imageUrl,
       String createdAt,
       List<String> announcements,
-      List<String> likes});
+      List<String> likes,
+      List<Device> device});
 }
 
 /// @nodoc
@@ -135,6 +143,7 @@ class __$$_MemberCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? announcements = null,
     Object? likes = null,
+    Object? device = null,
   }) {
     return _then(_$_Member(
       uid: null == uid
@@ -165,12 +174,17 @@ class __$$_MemberCopyWithImpl<$Res>
           ? _value._likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      device: null == device
+          ? _value._device
+          : device // ignore: cast_nullable_to_non_nullable
+              as List<Device>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_Member implements _Member {
   const _$_Member(
       {required this.uid,
@@ -179,9 +193,11 @@ class _$_Member implements _Member {
       required this.imageUrl,
       required this.createdAt,
       final List<String> announcements = const [],
-      final List<String> likes = const []})
+      final List<String> likes = const [],
+      final List<Device> device = const []})
       : _announcements = announcements,
-        _likes = likes;
+        _likes = likes,
+        _device = device;
 
   factory _$_Member.fromJson(Map<String, dynamic> json) =>
       _$$_MemberFromJson(json);
@@ -214,9 +230,18 @@ class _$_Member implements _Member {
     return EqualUnmodifiableListView(_likes);
   }
 
+  final List<Device> _device;
+  @override
+  @JsonKey()
+  List<Device> get device {
+    if (_device is EqualUnmodifiableListView) return _device;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_device);
+  }
+
   @override
   String toString() {
-    return 'Member(uid: $uid, name: $name, email: $email, imageUrl: $imageUrl, createdAt: $createdAt, announcements: $announcements, likes: $likes)';
+    return 'Member(uid: $uid, name: $name, email: $email, imageUrl: $imageUrl, createdAt: $createdAt, announcements: $announcements, likes: $likes, device: $device)';
   }
 
   @override
@@ -233,7 +258,8 @@ class _$_Member implements _Member {
                 other.createdAt == createdAt) &&
             const DeepCollectionEquality()
                 .equals(other._announcements, _announcements) &&
-            const DeepCollectionEquality().equals(other._likes, _likes));
+            const DeepCollectionEquality().equals(other._likes, _likes) &&
+            const DeepCollectionEquality().equals(other._device, _device));
   }
 
   @JsonKey(ignore: true)
@@ -246,7 +272,8 @@ class _$_Member implements _Member {
       imageUrl,
       createdAt,
       const DeepCollectionEquality().hash(_announcements),
-      const DeepCollectionEquality().hash(_likes));
+      const DeepCollectionEquality().hash(_likes),
+      const DeepCollectionEquality().hash(_device));
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +297,8 @@ abstract class _Member implements Member {
       required final String imageUrl,
       required final String createdAt,
       final List<String> announcements,
-      final List<String> likes}) = _$_Member;
+      final List<String> likes,
+      final List<Device> device}) = _$_Member;
 
   factory _Member.fromJson(Map<String, dynamic> json) = _$_Member.fromJson;
 
@@ -289,7 +317,181 @@ abstract class _Member implements Member {
   @override
   List<String> get likes;
   @override
+  List<Device> get device;
+  @override
   @JsonKey(ignore: true)
   _$$_MemberCopyWith<_$_Member> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Device _$DeviceFromJson(Map<String, dynamic> json) {
+  return _Device.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Device {
+  String get deviceId => throw _privateConstructorUsedError;
+  String get deviceType => throw _privateConstructorUsedError;
+  String get deviceToken => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DeviceCopyWith<Device> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DeviceCopyWith<$Res> {
+  factory $DeviceCopyWith(Device value, $Res Function(Device) then) =
+      _$DeviceCopyWithImpl<$Res, Device>;
+  @useResult
+  $Res call({String deviceId, String deviceType, String deviceToken});
+}
+
+/// @nodoc
+class _$DeviceCopyWithImpl<$Res, $Val extends Device>
+    implements $DeviceCopyWith<$Res> {
+  _$DeviceCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? deviceId = null,
+    Object? deviceType = null,
+    Object? deviceToken = null,
+  }) {
+    return _then(_value.copyWith(
+      deviceId: null == deviceId
+          ? _value.deviceId
+          : deviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+      deviceType: null == deviceType
+          ? _value.deviceType
+          : deviceType // ignore: cast_nullable_to_non_nullable
+              as String,
+      deviceToken: null == deviceToken
+          ? _value.deviceToken
+          : deviceToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DeviceCopyWith<$Res> implements $DeviceCopyWith<$Res> {
+  factory _$$_DeviceCopyWith(_$_Device value, $Res Function(_$_Device) then) =
+      __$$_DeviceCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String deviceId, String deviceType, String deviceToken});
+}
+
+/// @nodoc
+class __$$_DeviceCopyWithImpl<$Res>
+    extends _$DeviceCopyWithImpl<$Res, _$_Device>
+    implements _$$_DeviceCopyWith<$Res> {
+  __$$_DeviceCopyWithImpl(_$_Device _value, $Res Function(_$_Device) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? deviceId = null,
+    Object? deviceType = null,
+    Object? deviceToken = null,
+  }) {
+    return _then(_$_Device(
+      deviceId: null == deviceId
+          ? _value.deviceId
+          : deviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+      deviceType: null == deviceType
+          ? _value.deviceType
+          : deviceType // ignore: cast_nullable_to_non_nullable
+              as String,
+      deviceToken: null == deviceToken
+          ? _value.deviceToken
+          : deviceToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Device implements _Device {
+  const _$_Device(
+      {required this.deviceId,
+      required this.deviceType,
+      required this.deviceToken});
+
+  factory _$_Device.fromJson(Map<String, dynamic> json) =>
+      _$$_DeviceFromJson(json);
+
+  @override
+  final String deviceId;
+  @override
+  final String deviceType;
+  @override
+  final String deviceToken;
+
+  @override
+  String toString() {
+    return 'Device(deviceId: $deviceId, deviceType: $deviceType, deviceToken: $deviceToken)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Device &&
+            (identical(other.deviceId, deviceId) ||
+                other.deviceId == deviceId) &&
+            (identical(other.deviceType, deviceType) ||
+                other.deviceType == deviceType) &&
+            (identical(other.deviceToken, deviceToken) ||
+                other.deviceToken == deviceToken));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, deviceId, deviceType, deviceToken);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DeviceCopyWith<_$_Device> get copyWith =>
+      __$$_DeviceCopyWithImpl<_$_Device>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DeviceToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Device implements Device {
+  const factory _Device(
+      {required final String deviceId,
+      required final String deviceType,
+      required final String deviceToken}) = _$_Device;
+
+  factory _Device.fromJson(Map<String, dynamic> json) = _$_Device.fromJson;
+
+  @override
+  String get deviceId;
+  @override
+  String get deviceType;
+  @override
+  String get deviceToken;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DeviceCopyWith<_$_Device> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -19,6 +19,10 @@ _$_Member _$$_MemberFromJson(Map<String, dynamic> json) => _$_Member(
       likes:
           (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
+      device: (json['device'] as List<dynamic>?)
+              ?.map((e) => Device.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_MemberToJson(_$_Member instance) => <String, dynamic>{
@@ -29,4 +33,17 @@ Map<String, dynamic> _$$_MemberToJson(_$_Member instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
       'announcements': instance.announcements,
       'likes': instance.likes,
+      'device': instance.device.map((e) => e.toJson()).toList(),
+    };
+
+_$_Device _$$_DeviceFromJson(Map<String, dynamic> json) => _$_Device(
+      deviceId: json['deviceId'] as String,
+      deviceType: json['deviceType'] as String,
+      deviceToken: json['deviceToken'] as String,
+    );
+
+Map<String, dynamic> _$$_DeviceToJson(_$_Device instance) => <String, dynamic>{
+      'deviceId': instance.deviceId,
+      'deviceType': instance.deviceType,
+      'deviceToken': instance.deviceToken,
     };

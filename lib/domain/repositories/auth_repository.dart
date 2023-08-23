@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:announcement/core/folder_names.dart';
+import 'package:announcement/data/device_info_data_source/device_info_data_source.dart';
+import 'package:announcement/data/fcm_data_source/fcm_data_source.dart';
 import 'package:announcement/domain/models/member/member_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,18 +23,34 @@ class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuth auth;
   final FirebaseDatabase database;
   final FirebaseStorage storage;
+  final DeviceInfoDataSource deviceInfo;
+  final FCMDataSource fcm;
 
-  const AuthRepositoryImpl({required this.auth, required this.storage, required this.database});
+  const AuthRepositoryImpl({required this.auth, required this.storage, required this.database, required this.deviceInfo, required this.fcm});
 
   @override
   Future<User?> signIn(String email, String password) async {
     try {
       final credential = await auth.signInWithEmailAndPassword(email: email, password: password);
       final user = credential.user!;
-      // final member = Member(uid: user.uid, name: user.displayName!, email: email, imageUrl: "", createdAt: DateTime.now().toIso8601String());
-      // final folder = database.ref(Folder.user);
-      // final file = folder.child(member.uid);
-      // await file.set(member.toJson());
+      final memberPath = database.ref(Folder.user).child(user.uid);
+      final memberJson = await memberPath.get();
+
+      final member = Member.fromJson(Map<String, Object?>.from(jsonDecode(jsonEncode(memberJson.value)) as Map));
+      final deviceToken = await fcm.fcmToken;
+      print("TOKEN: $deviceToken");
+      final deviceId = await deviceInfo.deviceId;
+      final deviceType = Platform.isAndroid ? "A" : Platform.isIOS ? "I" : "O";
+
+      final device = Device(deviceId: deviceId, deviceType: deviceType, deviceToken: deviceToken!,);
+      final devices = List.from(member.device);
+
+      devices.removeWhere((element) => element.deviceId == device.deviceId);
+      devices.add(device);
+      await memberPath.update({
+        "device": devices.map((e) => e.toJson()).toList(),
+      });
+
       return credential.user;
     } catch(e) {
       return null;

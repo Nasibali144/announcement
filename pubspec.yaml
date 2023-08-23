@@ -30,6 +30,8 @@ dependencies:
   firebase_database: ^10.2.4
   firebase_storage: ^11.2.5
   firebase_crashlytics: ^3.3.4
+  firebase_messaging: ^14.6.6
+  firebase_analytics: ^10.4.4
 
   image_picker: ^1.0.2
 
@@ -41,7 +43,10 @@ dependencies:
   intl: ^0.18.1
 
   json_annotation: ^4.8.1
-  firebase_analytics: ^10.4.4
+
+  device_info_plus: ^9.0.3
+
+  flutter_local_notifications: ^15.1.0+1
 
 
 dev_dependencies:

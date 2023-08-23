@@ -1,5 +1,7 @@
 import 'package:announcement/core/routes.dart';
+import 'package:announcement/core/service_locator.dart';
 import 'package:announcement/core/utils.dart';
+import 'package:announcement/data/fcm_data_source/fcm_data_source.dart';
 import 'package:announcement/presentation/blocs/auth/auth_bloc.dart';
 import 'package:announcement/presentation/screens/home_screen.dart';
 import 'package:announcement/presentation/screens/profile_screen.dart';
@@ -16,6 +18,8 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<AuthBloc>();
+    final fcm = locator<FCMDataSource>();
+    fcm.permission();
     return BlocListener<AuthBloc, AuthState>(
       bloc: bloc,
       listener: (context, state) {
